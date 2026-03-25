@@ -328,8 +328,10 @@ function weightDown(current) {
 }
 
 const BASE_DATE = new Date(2026, 2, 23);
+const DAY_BOUNDARY_HOUR = 4; // Treat 0:00-3:59 as previous day
+function effectiveDate(d) { const e = new Date(d || new Date()); if (e.getHours() < DAY_BOUNDARY_HOUR) e.setDate(e.getDate() - 1); e.setHours(0,0,0,0); return e; }
 function getDayType(date) {
-  const d = new Date(date); d.setHours(0,0,0,0);
+  const d = effectiveDate(date);
   const base = new Date(BASE_DATE); base.setHours(0,0,0,0);
   const diff = Math.round((d - base) / (86400000));
   const cycle = ((diff % 4) + 4) % 4;
@@ -339,7 +341,7 @@ function getDayType(date) {
 const STORAGE_KEY = 'muscle_log';
 function loadData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
 function saveData(data) { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); }
-function dateKey(d) { const dt = d || new Date(); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; }
+function dateKey(d) { const dt = effectiveDate(d); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; }
 function getLastRecord(exId, before) {
   const data = loadData();
   for (const k of Object.keys(data).filter(k => k < before).sort().reverse())
