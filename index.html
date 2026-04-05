@@ -159,6 +159,8 @@ input{font:inherit;border:none;background:none;color:var(--gray-800)}
 .cal-cell--lower{background:var(--green-bg);color:var(--green)}
 .cal-cell--rest{background:var(--gray-100)}
 .cal-cell--empty{opacity:0}
+.cal-cell--tappable{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.cal-cell--tappable:active{background:var(--orange-bg2);transform:scale(.9)}
 
 /* ── Progress ── */
 .progress-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -524,7 +526,7 @@ function saveData(data) {
   // Debounced cloud sync (push changed day)
   clearTimeout(_saveDebounce);
   _saveDebounce = setTimeout(() => {
-    const key = dateKey();
+    const key = dateKey(getActiveDate());
     if (data[key]) pushToCloud(key, data[key]);
   }, 2000);
 }
@@ -766,9 +768,30 @@ document.getElementById('summaryClose').addEventListener('click', () => document
 document.getElementById('summaryDone').addEventListener('click', () => document.getElementById('summaryModal').classList.remove('is-visible'));
 document.getElementById('summaryModal').addEventListener('click', e => { if (e.target.id === 'summaryModal') document.getElementById('summaryModal').classList.remove('is-visible'); });
 
+let selectedDate = null; // null = today, Date = past date
+
+function selectDate(date) {
+  selectedDate = date;
+  // Switch to workout tab
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
+  document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
+  document.getElementById('screenWorkout').classList.add('is-active');
+  renderWorkout();
+}
+
+function getActiveDate() { return selectedDate || new Date(); }
+
 function renderWorkout() {
-  const today = new Date(), todayKey = dateKey(today);
-  document.getElementById('headerDate').textContent = formatHeaderDate(today);
+  const today = getActiveDate(), todayKey = dateKey(today);
+  const isToday = !selectedDate;
+  const headerDateEl = document.getElementById('headerDate');
+  if (isToday) {
+    headerDateEl.innerHTML = formatHeaderDate(today);
+  } else {
+    headerDateEl.innerHTML = `${formatHeaderDate(today)} の記録 <span style="color:var(--orange);font-weight:700;margin-left:6px;cursor:pointer" id="backToToday">← 今日</span>`;
+    document.getElementById('backToToday')?.addEventListener('click', () => { selectedDate = null; renderWorkout(); });
+  }
   const type = getDayType(today);
   const heroEl = document.getElementById('heroCard');
   const progressEl = document.getElementById('progressBar');
@@ -832,7 +855,7 @@ function renderWorkout() {
     listEl.querySelectorAll('[data-override]').forEach(btn => {
       btn.addEventListener('click', () => {
         const overrideType = btn.dataset.override;
-        const data = loadData(), key = dateKey();
+        const data = loadData(), key = dateKey(getActiveDate());
         data[key] = { type: overrideType, exercises: {}, completedAt: null, memo: '' };
         saveData(data);
         dayTypeOverrides[key] = overrideType;
@@ -957,7 +980,7 @@ function attachSetEvents(row, ex) {
 }
 
 function updateProgressBar() {
-  const type = getDayType(new Date());
+  const type = getDayType(getActiveDate());
   if (type === 'rest') return;
   const exCount = PROGRAM[type].exercises.length;
   let doneCount = 0;
@@ -979,7 +1002,8 @@ function updateProgressBar() {
 }
 
 function autoSave() {
-  const todayKey = dateKey(), data = loadData(), type = getDayType(new Date());
+  const active = getActiveDate();
+  const todayKey = dateKey(active), data = loadData(), type = getDayType(active);
   if (type === 'rest') return;
   const exercises = {};
   document.querySelectorAll('.set-list').forEach(list => {
@@ -996,7 +1020,7 @@ function autoSave() {
 document.getElementById('btnComplete').addEventListener('click', () => {
   autoSave();
   clearRestTimer();
-  const data = loadData(), key = dateKey();
+  const data = loadData(), key = dateKey(getActiveDate());
   if (data[key]) { data[key].completedAt = new Date().toISOString(); saveData(data); }
   showSummaryModal();
   document.getElementById('btnComplete').disabled = true;
@@ -1021,7 +1045,35 @@ function renderCalendar() {
     if (hasData && type === 'upper') cls += ' cal-cell--upper';
     else if (hasData && type === 'lower') cls += ' cal-cell--lower';
     else if (type === 'rest' && key <= today) cls += ' cal-cell--rest';
+    // Past & today dates are tappable
+    if (key <= today) cls += ' cal-cell--tappable';
     const el = document.createElement('div'); el.className = cls; el.textContent = d; grid.appendChild(el);
+    if (key <= today) {
+      el.addEventListener('click', () => {
+        const tapDate = new Date(calYear, calMonth, d);
+        const tapKey = dateKey(tapDate);
+        const tapType = getDayType(tapDate);
+        if (tapKey === dateKey()) {
+          // Today: reset to normal view
+          selectedDate = null;
+          renderWorkout();
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
+          document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
+          document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
+          document.getElementById('screenWorkout').classList.add('is-active');
+        } else if (tapType === 'rest' && !data[tapKey]) {
+          // Past rest day with no data: let user pick type
+          selectedDate = tapDate;
+          renderWorkout(); // will show rest view with override buttons
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
+          document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
+          document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
+          document.getElementById('screenWorkout').classList.add('is-active');
+        } else {
+          selectDate(tapDate);
+        }
+      });
+    }
   }
 }
 document.getElementById('calPrev').addEventListener('click', () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); });
