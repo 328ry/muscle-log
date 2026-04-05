@@ -1,9 +1,10 @@
-const CACHE_NAME = 'muscle-log-v1';
+const CACHE_NAME = 'muscle-log-v3';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   'https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js',
+  'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js',
 ];
 
 self.addEventListener('install', e => {
@@ -21,6 +22,11 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // Skip caching for Supabase API calls
+  if (e.request.url.includes('supabase.co')) {
+    e.respondWith(fetch(e.request));
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
