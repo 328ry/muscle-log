@@ -5,1124 +5,523 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#f7f9fc">
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Muscle Log</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{touch-action:manipulation}
 :root{
-  --bg:#fafafa;--white:#fff;
-  --gray-50:#f8f9fa;--gray-100:#f1f3f5;--gray-200:#e9ecef;--gray-300:#dee2e6;--gray-400:#adb5bd;--gray-500:#868e96;--gray-600:#495057;--gray-700:#343a40;--gray-800:#212529;
-  --orange:#f05a28;--orange-light:#ff7849;--orange-dark:#d94a1e;--orange-bg:rgba(240,90,40,.06);--orange-bg2:rgba(240,90,40,.1);--orange-glow:rgba(240,90,40,.2);
-  --green:#22c55e;--green-bg:rgba(34,197,94,.08);
-  --blue:#3b82f6;
-  --gradient:linear-gradient(135deg,#f05a28 0%,#ff7849 100%);
-  --radius:14px;--radius-sm:10px;--radius-xs:8px;
-  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --bg:#f7f9fc;--card:#fff;--ink:#111827;--muted:#6b7280;--soft:#eef2f7;--line:#dfe6ef;
+  --blue:#1f7aec;--blue-dark:#0f63d8;--blue-soft:#eaf3ff;--green:#22c7a5;--green-soft:#e9fbf6;--orange:#f59e0b;
+  --shadow:0 10px 28px rgba(15,35,70,.08),0 1px 2px rgba(15,35,70,.04);
+  --shadow-strong:0 16px 38px rgba(15,35,70,.14);
   --safe-b:env(safe-area-inset-bottom,0px);
-  --font:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;
+  --font:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
 }
-html{font-family:var(--font);background:var(--bg);color:var(--gray-800);-webkit-tap-highlight-color:transparent;font-size:15px}
-body{max-width:430px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column;padding-bottom:calc(68px + var(--safe-b));background:var(--bg)}
-button{font:inherit;border:none;cursor:pointer;-webkit-appearance:none}
-input{font:inherit;border:none;background:none;color:var(--gray-800)}
-
-/* ── Header ── */
-.header{background:var(--white);padding:16px 20px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--gray-200)}
-.header__brand{display:flex;align-items:center;gap:10px}
-.header__icon{width:34px;height:34px;background:var(--gradient);border-radius:var(--radius-xs);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px var(--orange-glow)}
-.header__icon svg{width:18px;height:18px;fill:#fff}
-.header h1{font-size:1.1rem;font-weight:800;letter-spacing:-.02em;color:var(--gray-800)}
-.header__date{font-size:0.8rem;color:var(--gray-500);font-weight:600}
-
-/* ── Tab bar ── */
-.tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--white);border-top:1px solid var(--gray-200);padding-bottom:var(--safe-b)}
-.tab-bar__inner{display:flex;max-width:430px;margin:0 auto;width:100%}
-.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 6px;background:none;color:var(--gray-400);font-size:0.6rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;transition:color .2s}
-.tab-btn svg{width:22px;height:22px;fill:currentColor;transition:transform .2s}
-.tab-btn.is-active{color:var(--orange)}
-.tab-btn.is-active svg{transform:scale(1.1)}
-
-/* ── Screens ── */
-.screen{display:none;flex:1;padding:12px 16px 16px;overflow-y:auto}
-.screen.is-active{display:flex;flex-direction:column;gap:12px;animation:fadeUp .3s ease}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-
-/* ── Today hero card ── */
-.hero{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-left:4px solid var(--orange)}
-.hero--rest{border-left-color:var(--gray-300)}
-.hero__top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.hero__day{font-size:1.15rem;font-weight:800;color:var(--gray-800)}
-.hero__badge{font-size:0.65rem;font-weight:700;padding:4px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:.05em}
-.hero__badge--upper{background:var(--orange-bg2);color:var(--orange)}
-.hero__badge--lower{background:var(--green-bg);color:var(--green)}
-.hero__badge--rest{background:var(--gray-100);color:var(--gray-500)}
-.hero__meta{display:flex;gap:16px;font-size:0.78rem;color:var(--gray-500)}
-.hero__meta strong{color:var(--gray-700)}
-
-/* ── Progress bar ── */
-.progress{background:var(--white);border-radius:var(--radius);padding:14px 20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:14px}
-.progress__bar{flex:1;height:8px;background:var(--gray-100);border-radius:4px;overflow:hidden}
-.progress__fill{height:100%;background:var(--gradient);border-radius:4px;transition:width .4s ease}
-.progress__label{font-size:0.8rem;font-weight:700;color:var(--gray-600);white-space:nowrap}
-
-/* ── Stats chips ── */
-.stats{display:flex;gap:8px}
-.stat-chip{flex:1;background:var(--white);border-radius:var(--radius-sm);padding:12px 8px;box-shadow:var(--shadow);text-align:center}
-.stat-chip__value{font-size:1.1rem;font-weight:800;color:var(--orange)}
-.stat-chip__label{font-size:0.6rem;color:var(--gray-500);margin-top:2px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-
-/* ── Exercise card ── */
-.exercise-card{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:10px}
-.exercise-card.is-done{opacity:.6}
-.exercise-card__head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.exercise-card__info{flex:1;min-width:0}
-.exercise-card__name{font-size:0.92rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.exercise-card__target{font-size:0.7rem;color:var(--gray-500);margin-top:2px}
-.exercise-card__prev{font-size:0.65rem;color:var(--gray-400);margin-top:1px}
-.exercise-card__help{width:28px;height:28px;border-radius:50%;background:var(--gray-100);color:var(--gray-500);display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;transition:all .15s}
-.exercise-card__help:active{background:var(--gray-200);transform:scale(.92)}
-
-.set-header{display:grid;grid-template-columns:24px 1fr 1fr 38px;gap:6px;font-size:0.6rem;color:var(--gray-400);text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding:0 2px 4px}
-
-.set-row{display:grid;grid-template-columns:24px 1fr 1fr 38px;gap:6px;align-items:center}
-.set-row__num{font-size:0.7rem;color:var(--gray-400);text-align:center;font-weight:700}
-
-/* Stepper input */
-.stepper{display:flex;align-items:center;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:var(--radius-xs);overflow:hidden;height:38px}
-.stepper__btn{width:32px;height:100%;background:none;color:var(--gray-500);font-size:1rem;font-weight:700;display:flex;align-items:center;justify-content:center;transition:background .15s}
-.stepper__btn:active{background:var(--gray-200)}
-.stepper__val{flex:1;text-align:center;font-size:0.85rem;font-weight:700;color:var(--gray-800);min-width:0;padding:0;background:none;border:none}
-.stepper__val:focus{outline:none;color:var(--orange)}
-
-.set-row__check{width:36px;height:36px;border-radius:50%;background:var(--gray-100);border:2px solid var(--gray-200);display:flex;align-items:center;justify-content:center;color:var(--gray-300);transition:all .25s cubic-bezier(.34,1.56,.64,1)}
-.set-row__check svg{width:16px;height:16px;fill:currentColor}
-.set-row__check.is-done{background:var(--orange);border-color:var(--orange);color:#fff;box-shadow:0 2px 8px var(--orange-glow)}
-.set-row__check:active:not(.is-done){transform:scale(.88)}
-
-.btn-add-set{background:none;color:var(--orange);font-size:0.78rem;font-weight:700;padding:8px;text-align:center;width:100%}
-
-/* ── Rest day ── */
-.rest-card{background:var(--white);border-radius:var(--radius);padding:48px 24px;text-align:center;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:12px}
-.rest-card__icon{font-size:3rem}
-.rest-card__title{font-size:1.15rem;font-weight:800;color:var(--gray-700)}
-.rest-card__desc{font-size:0.85rem;color:var(--gray-500);line-height:1.7;max-width:260px}
-.rest-override{display:flex;gap:8px;margin-top:4px}
-.rest-override__btn{flex:1;background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius);padding:14px 12px;text-align:center;box-shadow:var(--shadow);transition:all .15s}
-.rest-override__btn:active{transform:scale(.97);border-color:var(--orange)}
-.rest-override__label{font-size:0.85rem;font-weight:700;color:var(--gray-700)}
-.rest-override__sub{font-size:0.65rem;color:var(--gray-500);margin-top:2px}
-
-/* ── Summary modal ── */
-.summary-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
-.summary-stat{background:var(--gray-50);border-radius:var(--radius-sm);padding:14px 8px;text-align:center}
-.summary-stat__value{font-size:1.3rem;font-weight:800;color:var(--orange)}
-.summary-stat__label{font-size:0.65rem;color:var(--gray-500);margin-top:3px;font-weight:600}
-.summary-section{margin-bottom:12px}
-.summary-section__title{font-size:0.75rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
-.summary-pr{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--orange-bg);border-radius:var(--radius-xs);margin-bottom:4px;font-size:0.85rem;font-weight:600;color:var(--orange)}
-.summary-compare{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray-100);font-size:0.82rem;color:var(--gray-600)}
-.summary-compare__diff{font-weight:700}
-.summary-compare__diff--up{color:var(--green)}
-.summary-compare__diff--down{color:#ef4444}
-.summary-compare__diff--same{color:var(--gray-400)}
-
-/* ── Memo card ── */
-.memo-card{background:var(--white);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow)}
-.memo-card__label{font-size:0.7rem;color:var(--gray-500);font-weight:700;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
-.memo-card__input{width:100%;border:1px solid var(--gray-200);border-radius:var(--radius-xs);padding:10px;font-size:0.85rem;resize:none;font-family:var(--font);color:var(--gray-700);background:var(--gray-50);line-height:1.6}
-.memo-card__input:focus{outline:none;border-color:var(--orange);background:var(--white)}
-.memo-card__input::placeholder{color:var(--gray-400)}
-
-/* ── Complete button ── */
-.btn-complete{background:var(--gradient);color:#fff;border-radius:var(--radius);padding:16px;font-size:0.95rem;font-weight:800;width:100%;letter-spacing:.02em;box-shadow:0 4px 16px var(--orange-glow);transition:all .2s;margin-top:4px}
-.btn-complete:active{transform:scale(.97)}
-.btn-complete:disabled{opacity:0.4;transform:none}
-
-/* ── PR toast ── */
-.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--white);border:2px solid var(--orange);color:var(--orange);padding:12px 24px;border-radius:var(--radius);font-size:0.85rem;font-weight:800;opacity:0;transition:all .4s cubic-bezier(.16,1,.3,1);z-index:300;pointer-events:none;box-shadow:var(--shadow-md)}
-.toast.is-visible{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── Calendar ── */
-.cal-nav{display:flex;align-items:center;justify-content:space-between;padding:4px 0}
-.cal-nav__btn{background:var(--white);border:1px solid var(--gray-200);color:var(--gray-600);border-radius:var(--radius-xs);padding:8px 16px;font-size:0.85rem;font-weight:600;box-shadow:var(--shadow);transition:all .15s}
-.cal-nav__btn:active{background:var(--gray-50);transform:scale(.95)}
-.cal-nav__label{font-size:1rem;font-weight:700}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;padding:8px 0}
-.cal-grid__dow{font-size:0.6rem;color:var(--gray-400);padding:8px 0;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-.cal-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:0.78rem;font-weight:600;color:var(--gray-400);transition:all .15s}
-.cal-cell--today{outline:2px solid var(--orange);outline-offset:-2px;color:var(--gray-800);font-weight:800}
-.cal-cell--upper{background:var(--orange-bg2);color:var(--orange)}
-.cal-cell--lower{background:var(--green-bg);color:var(--green)}
-.cal-cell--rest{background:var(--gray-100)}
-.cal-cell--empty{opacity:0}
-.cal-cell--tappable{cursor:pointer;-webkit-tap-highlight-color:transparent}
-.cal-cell--tappable:active{background:var(--orange-bg2);transform:scale(.9)}
-
-/* ── Progress ── */
-.progress-tabs{display:flex;gap:6px;overflow-x:auto;padding:4px 0;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.progress-tabs::-webkit-scrollbar{display:none}
-.progress-tab{white-space:nowrap;padding:8px 14px;border-radius:20px;background:var(--white);border:1px solid var(--gray-200);color:var(--gray-500);font-size:0.75rem;font-weight:700;flex-shrink:0;transition:all .2s;box-shadow:var(--shadow)}
-.progress-tab.is-active{background:var(--gradient);border-color:transparent;color:#fff;box-shadow:0 2px 8px var(--orange-glow)}
-.stat-row{display:flex;gap:8px}
-.stat-box{flex:1;background:var(--white);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;box-shadow:var(--shadow)}
-.stat-box__value{font-size:1.2rem;font-weight:800;color:var(--orange)}
-.stat-box__label{font-size:0.6rem;color:var(--gray-500);margin-top:3px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
-.chart-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
-.chart-card canvas{width:100%!important;height:250px!important}
-.chart-card__title{font-size:0.9rem;font-weight:700;margin-bottom:4px}
-.chart-card__subtitle{font-size:0.7rem;color:var(--gray-500);margin-bottom:14px;font-weight:500}
-
-/* ── Modal ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:200;align-items:flex-end;justify-content:center}
-.modal-overlay.is-visible{display:flex;animation:fadeIn .2s}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-.modal{background:var(--white);border-radius:var(--radius) var(--radius) 0 0;width:100%;max-width:430px;max-height:80dvh;overflow-y:auto;padding:24px 20px calc(24px + var(--safe-b));animation:slideUp .3s cubic-bezier(.16,1,.3,1)}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:none}}
-.modal__title{font-size:1.05rem;font-weight:800}
-.modal__close{background:var(--gray-100);color:var(--gray-500);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;transition:all .15s}
-.modal__close:active{background:var(--gray-200);transform:scale(.9)}
-.modal p{font-size:0.85rem;line-height:1.8;color:var(--gray-600)}
-.modal h3{font-size:0.88rem;font-weight:700;margin:16px 0 6px;color:var(--gray-800);display:flex;align-items:center;gap:6px}
-.modal h3::before{content:'';width:3px;height:14px;background:var(--gradient);border-radius:2px;flex-shrink:0}
-.modal ul{padding-left:1.2em;font-size:0.83rem;line-height:1.8;color:var(--gray-600)}
-
-/* ── Rest timer ── */
-.rest-timer{position:fixed;bottom:calc(68px + var(--safe-b));left:0;right:0;z-index:99;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--white);border-top:1px solid var(--gray-200);box-shadow:0 -2px 8px rgba(0,0,0,.06);max-width:430px;margin:0 auto}
-.rest-timer__bar{flex:1;height:6px;background:var(--gray-100);border-radius:3px;overflow:hidden}
-.rest-timer__fill{height:100%;background:var(--gradient);border-radius:3px;transition:width 1s linear}
-.rest-timer__time{font-size:1.1rem;font-weight:800;color:var(--orange);min-width:36px;text-align:center}
-.rest-timer__skip{background:var(--gray-100);color:var(--gray-600);border-radius:var(--radius-xs);padding:6px 12px;font-size:0.75rem;font-weight:700}
-.rest-timer__skip:active{background:var(--gray-200)}
-.rest-timer__config{display:flex;gap:6px;align-items:center}
-.rest-timer__opt{padding:4px 10px;border-radius:16px;background:var(--gray-100);color:var(--gray-600);font-size:0.7rem;font-weight:700}
-.rest-timer__opt.is-active{background:var(--orange-bg2);color:var(--orange)}
-.rest-timer__opt:active{transform:scale(.92)}
-
-/* ── Confetti particles ── */
-.confetti{position:fixed;width:8px;height:8px;border-radius:50%;z-index:400;pointer-events:none;animation:confettiFall .8s ease forwards}
-@keyframes confettiFall{0%{transform:translate(0,0) scale(1);opacity:1}100%{transform:translate(var(--x),var(--y)) scale(0);opacity:0}}
-
-.screen::-webkit-scrollbar{width:0}
+html{font-family:var(--font);background:linear-gradient(180deg,#fff 0%,#edf4fb 100%);color:var(--ink);-webkit-tap-highlight-color:transparent}
+body{max-width:390px;margin:0 auto;min-height:100dvh;background:var(--bg);padding:0 16px calc(86px + var(--safe-b));box-shadow:0 18px 54px rgba(18,34,59,.14);overflow-x:hidden}
+button,input,textarea{font:inherit}
+button{border:0;background:none;cursor:pointer;color:inherit}
+input,textarea{border:0;background:none;color:inherit}
+.status{height:36px;display:flex;align-items:end;justify-content:space-between;padding:0 2px 8px;font-size:12px;font-weight:800;color:#111827}
+.status__icons{display:flex;align-items:center;gap:5px}
+.signal{width:18px;height:11px;display:grid;grid-template-columns:repeat(4,3px);align-items:end;gap:2px}
+.signal span{display:block;width:3px;background:#111;border-radius:2px}.signal span:nth-child(1){height:4px}.signal span:nth-child(2){height:6px}.signal span:nth-child(3){height:8px}.signal span:nth-child(4){height:10px}
+.wifi{width:14px;height:10px;border:2px solid #111;border-bottom:0;border-left-color:transparent;border-right-color:transparent;border-radius:12px 12px 0 0}
+.battery{width:19px;height:9px;border:1.6px solid #111;border-radius:2px;position:relative}.battery::after{content:"";position:absolute;right:-3px;top:2px;width:2px;height:4px;background:#111;border-radius:1px}.battery::before{content:"";position:absolute;inset:1.5px 3px 1.5px 1.5px;background:#111;border-radius:1px}
+.top{display:flex;align-items:center;justify-content:space-between;margin:10px 0 14px}
+.top__title{font-size:22px;line-height:1.2;font-weight:900;letter-spacing:0}
+.icon-btn{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#111827}
+.icon-btn svg,.nav-btn svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.screen{display:none;flex-direction:column;gap:14px}
+.screen.active{display:flex}
+.card{background:var(--card);border:1px solid rgba(17,24,39,.06);border-radius:16px;box-shadow:var(--shadow)}
+.summary-card{padding:18px 16px;display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:center}
+.ring{width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--blue) var(--ring,0deg),#e5eaf1 0);position:relative}
+.ring::before{content:"";position:absolute;inset:9px;background:#fff;border-radius:50%}
+.ring__inner{position:relative;text-align:center}.ring__label{font-size:11px;font-weight:800;color:var(--muted)}.ring__num{font-size:26px;font-weight:900;line-height:1}.ring__unit{font-size:12px;font-weight:800;color:var(--muted)}
+.summary-lines{display:flex;flex-direction:column;gap:12px}.summary-line{display:flex;justify-content:space-between;gap:10px;font-size:12px;font-weight:800}.summary-line span{color:var(--muted)}.summary-line strong{color:#111827}
+.section-title{font-size:15px;font-weight:900;margin:2px 4px 0}
+.workout-list{display:flex;flex-direction:column;gap:10px}
+.workout-card{min-height:86px;padding:12px 12px;display:grid;grid-template-columns:30px 62px 1fr 20px;gap:10px;align-items:center}
+.check{width:22px;height:22px;border-radius:50%;border:2px solid #cbd5e1;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:900}
+.check.done{background:#22c55e;border-color:#22c55e}.check.done::after{content:"✓"}
+.exercise-art{height:58px;border-radius:12px;background:linear-gradient(145deg,#f7f9fc,#e9eef6);display:grid;place-items:center;color:#4b5563;font-size:28px}
+.workout-card__name{font-size:15px;font-weight:900;margin-bottom:9px}.metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mini-metric{text-align:center}.mini-metric strong{display:block;font-size:12px;font-weight:900}.mini-metric span{display:block;font-size:10px;color:var(--muted);font-weight:800;margin-top:2px}
+.chev{font-size:22px;color:#111827}
+.empty{padding:34px 20px;text-align:center;color:var(--muted);font-size:14px;font-weight:700;line-height:1.7}
+.form{display:flex;flex-direction:column;gap:16px}
+.field{display:flex;flex-direction:column;gap:8px}.label{font-size:13px;font-weight:900}.input{height:42px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:0 12px;font-size:14px;font-weight:700;box-shadow:inset 0 1px 2px rgba(15,35,70,.03)}textarea.input{height:58px;resize:none;padding-top:11px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#eef2f7;border-radius:9px;padding:8px 12px;font-size:12px;font-weight:800;color:#344054}.chip.active{background:var(--blue);color:#fff}
+.number-control{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px}.round-btn{width:42px;height:42px;border:1px solid #cfd8e3;border-radius:50%;display:grid;place-items:center;font-size:27px;color:#111827;background:#fff}.big-number{text-align:center;font-size:42px;font-weight:900;color:var(--blue);line-height:1.1}
+.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;background:#fff}.scale span{height:24px;display:grid;place-items:center;border-radius:5px;font-size:11px;color:var(--muted);font-weight:800}.scale span.active{background:var(--blue);color:#fff}
+.set-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.set-btn{height:34px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:13px;font-weight:800}.set-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}.outline-btn,.primary-btn{height:42px;border-radius:9px;font-size:14px;font-weight:900}.outline-btn{border:1.5px solid var(--blue);color:var(--blue);background:#fff}.primary-btn{background:linear-gradient(180deg,#2c8cff,#0f6fe8);color:#fff;box-shadow:0 10px 20px rgba(31,122,236,.24)}
+.calendar-card{padding:14px}.month-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.month-row strong{font-size:15px}.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:7px}.dow{font-size:11px;font-weight:800;color:var(--muted)}.day{height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;position:relative;user-select:none}.day[data-date]{cursor:pointer}.day[data-date]:active{background:var(--blue-soft)}.day.active{background:var(--blue);color:#fff}.day.active[data-date]:active{background:var(--blue-dark)}.day.has::after{content:"";position:absolute;bottom:1px;width:4px;height:4px;background:var(--blue);border-radius:50%}.day.active::after{background:#fff}
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);padding:12px 0}.stats-strip div{text-align:center;border-right:1px solid #e5eaf1}.stats-strip div:last-child{border-right:0}.stats-strip strong{display:block;font-size:18px}.stats-strip span{font-size:11px;color:var(--muted);font-weight:800}
+.record-list{display:flex;flex-direction:column;gap:10px}.record-card{padding:14px}.record-head{display:flex;justify-content:space-between;align-items:center}.record-head strong{font-size:14px}.record-head span{font-size:12px;color:var(--muted);font-weight:800}.record-detail{font-size:12px;color:var(--muted);font-weight:800;margin:7px 0 12px}.record-table{display:flex;flex-direction:column;gap:8px}.record-row{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:12px;font-weight:800}.record-row span:last-child{color:#111827}
+.range-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.range-tabs button{height:32px;border-radius:9px;font-size:12px;font-weight:800}.range-tabs button.active{background:var(--blue);color:#fff}.chart-card{padding:16px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}.chart-title{font-size:15px;font-weight:900}.chart-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:3px}.best-badge{border:1px solid #8ec0ff;border-radius:8px;padding:6px 10px;text-align:center;color:var(--blue);font-weight:900;font-size:13px}.best-badge span{display:block;font-size:11px}.chart-wrap{height:210px}.chart-wrap canvas{width:100%!important;height:100%!important}.summary-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-card{padding:14px}.mini-card span{font-size:12px;color:var(--muted);font-weight:800}.mini-card strong{display:block;margin-top:8px;font-size:25px;color:#16a34a}.mini-card strong.orange{color:var(--orange)}
+.settings-card{padding:16px}.settings-card strong{display:block;font-size:15px;margin-bottom:8px}.settings-card p{font-size:13px;line-height:1.7;color:var(--muted);font-weight:700}
+.auth-panel{display:flex;flex-direction:column;gap:10px}.auth-row{display:flex;gap:8px}.auth-row .primary-btn,.auth-row .outline-btn{flex:1}.sync-state{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:var(--blue-soft);color:var(--blue);padding:6px 10px;font-size:12px;font-weight:900}.sync-state.local{background:#eef2f7;color:#64748b}.sync-state.error{background:#fef2f2;color:#ef4444}
+.tabbar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);border-top:1px solid rgba(17,24,39,.06);box-shadow:0 -12px 32px rgba(15,35,70,.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:6px 0 calc(6px + var(--safe-b));z-index:50}.tabbar__inner{max-width:390px;height:64px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding:0 8px}.nav-btn{width:100%;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding-top:10px;font-size:10px;font-weight:800;color:#111827}.nav-btn.active{color:var(--blue)}.nav-btn svg{display:block;flex:0 0 auto}.nav-btn--add{position:relative;top:-16px;color:var(--blue);height:78px;padding-top:0;justify-content:flex-start;gap:3px}.nav-btn--add .plus{width:52px;height:52px;min-width:52px;min-height:52px;aspect-ratio:1/1;flex:0 0 52px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2c8cff,#0f6fe8);box-shadow:0 10px 24px rgba(31,122,236,.35),0 0 0 7px rgba(255,255,255,.96);color:#fff;font-size:33px;font-weight:400;line-height:1;text-align:center;padding:0 0 3px}.nav-btn--add span:last-child{display:block;margin-top:0}
+.toast{position:fixed;left:50%;top:52px;transform:translateX(-50%) translateY(-16px);background:#111827;color:#fff;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;z-index:90}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
-<div class="header">
-  <div class="header__brand">
-    <div class="header__icon"><svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43 1.43 1.43 2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg></div>
-    <h1>Muscle Log</h1>
-  </div>
-  <span class="header__date" id="headerDate"></span>
-</div>
+<div class="status"><span>9:41</span><div class="status__icons"><div class="signal"><span></span><span></span><span></span><span></span></div><div class="wifi"></div><div class="battery"></div></div></div>
+<header class="top">
+  <div><h1 class="top__title" id="screenTitle">今日の記録</h1></div>
+  <button class="icon-btn" id="topAction" type="button" aria-label="設定"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
+</header>
 
-<div class="screen is-active" id="screenWorkout">
-  <div id="heroCard"></div>
-  <div id="progressBar"></div>
-  <div id="statsChips"></div>
-  <div id="exerciseList" style="display:flex;flex-direction:column;gap:10px"></div>
-  <div class="memo-card" id="memoCard" style="display:none">
-    <div class="memo-card__label">メモ</div>
-    <textarea class="memo-card__input" id="memoInput" placeholder="今日の調子、気づいたことなど..." rows="2"></textarea>
-  </div>
-  <button class="btn-complete" id="btnComplete" style="display:none">ワークアウト完了</button>
-</div>
-
-<div class="screen" id="screenCalendar">
-  <div class="cal-nav">
-    <button class="cal-nav__btn" id="calPrev">&larr;</button>
-    <span class="cal-nav__label" id="calLabel"></span>
-    <button class="cal-nav__btn" id="calNext">&rarr;</button>
-  </div>
-  <div class="cal-grid" id="calGrid"></div>
-</div>
-
-<div class="screen" id="screenProgress">
-  <div class="progress-tabs" id="progressTabs"></div>
-  <div class="stat-row" id="statRow"></div>
-  <div class="chart-card">
-    <div class="chart-card__title" id="chartTitle"></div>
-    <div class="chart-card__subtitle" id="chartSubtitle"></div>
-    <canvas id="chartCanvas"></canvas>
-  </div>
-</div>
-
-<div class="rest-timer" id="restTimer" style="display:none">
-  <div class="rest-timer__bar"><div class="rest-timer__fill" id="restTimerFill"></div></div>
-  <span class="rest-timer__time" id="restTimerTime">90</span>
-  <button class="rest-timer__skip" id="restTimerSkip">スキップ</button>
-</div>
-
-<div class="tab-bar"><div class="tab-bar__inner">
-  <button class="tab-btn is-active" data-screen="screenWorkout">
-    <svg viewBox="0 0 24 24"><path d="M20.57 14.86L22 13.43 20.57 12 17 15.57 8.43 7 12 3.43 10.57 2 9.14 3.43 7.71 2 5.57 4.14 4.14 2.71 2.71 4.14l1.43 1.43L2 7.71l1.43 1.43L2 10.57 3.43 12 7 8.43 15.57 17 12 20.57 13.43 22l1.43-1.43 1.43 1.43 2.14-2.14 1.43 1.43 1.43-1.43-1.43-1.43L22 16.29z"/></svg>
-    <span>Workout</span>
-  </button>
-  <button class="tab-btn" data-screen="screenCalendar">
-    <svg viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
-    <span>Calendar</span>
-  </button>
-  <button class="tab-btn" data-screen="screenProgress">
-    <svg viewBox="0 0 24 24"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
-    <span>Progress</span>
-  </button>
-</div></div>
-
-<div class="modal-overlay" id="helpModal">
-  <div class="modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <div class="modal__title" id="helpTitle"></div>
-      <button class="modal__close" id="helpClose">&times;</button>
+<main>
+  <section class="screen active" id="homeScreen">
+    <div class="card summary-card">
+      <div class="ring" id="progressRing"><div class="ring__inner"><div class="ring__label">完了</div><div class="ring__num" id="ringCount">0/0</div><div class="ring__unit">セット</div></div></div>
+      <div class="summary-lines">
+        <div class="summary-line"><span>今日の進捗</span><strong id="todayProgress">0%</strong></div>
+        <div class="summary-line"><span>総セット数</span><strong id="todaySets">0 set</strong></div>
+        <div class="summary-line"><span>総レップ数</span><strong id="todayReps">0 rep</strong></div>
+        <div class="summary-line"><span>推定消費カロリー</span><strong id="todayCalories">0 kcal</strong></div>
+      </div>
     </div>
-    <div id="helpBody"></div>
-  </div>
-</div>
+    <h2 class="section-title">今日のトレーニングメニュー</h2>
+    <div class="workout-list" id="todayList"></div>
+  </section>
 
-<div class="modal-overlay" id="summaryModal">
-  <div class="modal">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <div class="modal__title" id="summaryTitle">ワークアウト完了!</div>
-      <button class="modal__close" id="summaryClose">&times;</button>
+  <section class="screen" id="addScreen">
+    <div class="form">
+      <div class="field"><label class="label" for="exerciseName">種目名</label><input class="input" id="exerciseName" list="exerciseOptions" placeholder="種目名を入力・選択"><datalist id="exerciseOptions"></datalist></div>
+      <div class="field"><div class="label">最近使った種目</div><div class="chips" id="recentChips"></div></div>
+      <div class="field"><div class="label">重量 (kg)</div><div class="number-control"><button class="round-btn" data-step-weight="-1" type="button">−</button><div class="big-number" id="weightValue">12.0</div><button class="round-btn" data-step-weight="1" type="button">＋</button></div><div class="scale" id="weightScale"></div></div>
+      <div class="field"><div class="label">回数 (回)</div><div class="number-control"><button class="round-btn" data-step-reps="-1" type="button">−</button><div class="big-number" id="repsValue">10</div><button class="round-btn" data-step-reps="1" type="button">＋</button></div><div class="scale" id="repsScale"></div></div>
+      <div class="field"><div class="label">セット数</div><div class="set-grid" id="setGrid"></div></div>
+      <div class="field"><label class="label" for="memoInput">メモ（任意）</label><textarea class="input" id="memoInput" placeholder="フォームや感想などをメモできます"></textarea></div>
+      <div class="actions"><button class="outline-btn" id="addAnother" type="button">＋ 種目を追加</button><button class="primary-btn" id="saveRecord" type="button">保存する</button></div>
     </div>
-    <div id="summaryBody"></div>
-    <button class="btn-complete" id="summaryDone" style="margin-top:16px">閉じる</button>
-  </div>
-</div>
+  </section>
 
+  <section class="screen" id="recordsScreen">
+    <div class="card calendar-card"><div class="month-row"><button id="prevMonth" type="button">‹</button><strong id="monthLabel"></strong><button id="nextMonth" type="button">›</button></div><div class="week" id="calendarGrid"></div></div>
+    <div class="card stats-strip"><div><strong id="recordDays">0日</strong><span>記録日数</span></div><div><strong id="recordExercises">0種目</strong><span>総種目数</span></div><div><strong id="recordSets">0セット</strong><span>総セット数</span></div></div>
+    <div class="record-list" id="recordList"></div>
+  </section>
+
+  <section class="screen" id="analyticsScreen">
+    <div class="range-tabs"><button class="active" type="button">1週</button><button type="button">1か月</button><button type="button">3か月</button><button type="button">1年</button><button type="button">全期間</button></div>
+    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title" id="weightChartTitle">ダンベルカール</div><div class="chart-sub">最大重量の推移 (kg)</div></div><div class="best-badge"><span>自己ベスト</span><strong id="bestWeight">0kg</strong></div></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div></div>
+    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title">カール成長スコア</div><div class="chart-sub">ダンベルカール重量 × 合計回数</div></div><div class="best-badge"><span>最高スコア</span><strong id="bestCurlScore">0pt</strong></div></div><div class="chart-wrap"><canvas id="curlScoreChart"></canvas></div></div>
+    <div class="summary-mini"><div class="card mini-card"><span>先月比（最大重量）</span><strong id="monthGrowth">+0%</strong></div><div class="card mini-card"><span>自己ベスト更新</span><strong class="orange" id="prCount">0回</strong></div></div>
+  </section>
+
+  <section class="screen" id="settingsScreen">
+    <div class="card settings-card"><strong>同期</strong><div class="auth-panel" id="authPanel"></div></div>
+  </section>
+</main>
+
+<nav class="tabbar"><div class="tabbar__inner">
+  <button class="nav-btn active" data-screen="home" type="button"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 10v10h14V10"></path></svg><span>ホーム</span></button>
+  <button class="nav-btn" data-screen="records" type="button"><svg viewBox="0 0 24 24"><path d="M8 2v4"></path><path d="M16 2v4"></path><rect x="4" y="4" width="16" height="18" rx="2"></rect><path d="M8 11h8"></path><path d="M8 15h5"></path></svg><span>記録</span></button>
+  <button class="nav-btn nav-btn--add" data-screen="add" type="button"><span class="plus">+</span><span>追加</span></button>
+  <button class="nav-btn" data-screen="analytics" type="button"><svg viewBox="0 0 24 24"><path d="M4 19V5"></path><path d="M4 19h17"></path><path d="m7 15 4-4 3 3 5-7"></path></svg><span>分析</span></button>
+  <button class="nav-btn" data-screen="settings" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2 3.4-.2-.1a1.7 1.7 0 0 0-2 .2 1.7 1.7 0 0 0-.8 1.7V22H9.2v-.2a1.7 1.7 0 0 0-.8-1.7 1.7 1.7 0 0 0-2-.2l-.2.1-2-3.4.1-.1A1.7 1.7 0 0 0 4.6 15 1.7 1.7 0 0 0 3 14H2v-4h1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2-3.4.2.1a1.7 1.7 0 0 0 2-.2 1.7 1.7 0 0 0 .8-1.7V2h5.6v.2a1.7 1.7 0 0 0 .8 1.7 1.7 1.7 0 0 0 2 .2l.2-.1 2 3.4-.1.1a1.7 1.7 0 0 0-.3 1.9A1.7 1.7 0 0 0 21 10h1v4h-1a1.7 1.7 0 0 0-1.6 1z"></path></svg><span>設定</span></button>
+</div></nav>
 <div class="toast" id="toast"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ── Supabase sync ──
-const SUPABASE_URL = 'https://vqpidjrpfsyaohqddcri.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxcGlkanJwZnN5YW9ocWRkY3JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MDMxMDAsImV4cCI6MjA5MDk3OTEwMH0.iLKTGiqe39AKOqY36Excbvfvoqu04_zHYSOh6kFm_mA';
-const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-let syncReady = false;
+const STORAGE_KEY = "muscle_log_v2";
+const LEGACY_KEY = "muscle_log";
+const SUPABASE_URL = "https://vqpidjrpfsyaohqddcri.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxcGlkanJwZnN5YW9ocWRkY3JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MDMxMDAsImV4cCI6MjA5MDk3OTEwMH0.iLKTGiqe39AKOqY36Excbvfvoqu04_zHYSOh6kFm_mA";
+const EXERCISES = ["ダンベルカール","ショルダープレス","ベンチプレス","ダンベルフライ","スクワット","ダンベルベンチプレス","ルーマニアンデッドリフト"];
+const WEIGHTS = [2.5,5,7.5,10,12.5,15,17.5,20];
+const REPS = [6,8,10,12,15,20,25];
+const DOW = ["日","月","火","水","木","金","土"];
+let state = { weight: 12, reps: 10, sets: 3, month: new Date(), activeDate: null, charts: {} };
+let cloudClient = null;
+let cloudUser = null;
+let cloudStatus = "local";
+let cloudMessage = "";
+let cloudSaveTimer = null;
 
-async function sbInit() {
-  try {
-    // Check existing session first
-    const { data: { session } } = await sb.auth.getSession();
-    if (!session) {
-      const { error } = await sb.auth.signInWithPassword({
-        email: 'ryuueda08@gmail.com', password: 'Recha39'
+function keyOf(date=new Date()){ return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,"0")}-${String(date.getDate()).padStart(2,"0")}`; }
+// Use 4am as the day boundary so late-night workouts count as the previous day's record
+function todayKey(){ const d = new Date(); if (d.getHours() < 4) d.setDate(d.getDate() - 1); return keyOf(d); }
+function activeKey(){ return state.activeDate || todayKey(); }
+function dateLabel(key){ const d = new Date(key+"T12:00:00"); return `${d.getMonth()+1}/${d.getDate()}(${DOW[d.getDay()]})`; }
+function loadRecords(){ migrateLegacy(); try{return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []}catch{return []} }
+function saveRecords(records){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  scheduleCloudSave(records);
+}
+function touchRecord(record){
+  record.updatedAt = new Date().toISOString();
+  return record;
+}
+function recordTime(record){
+  return Date.parse(record.updatedAt || record.updated_at || record.date + "T00:00:00") || 0;
+}
+function mergeRecords(localRecords, cloudRecords){
+  const byDate = new Map();
+  [...cloudRecords, ...localRecords].forEach(record => {
+    const current = byDate.get(record.date);
+    if (!current || recordTime(record) >= recordTime(current)) byDate.set(record.date, record);
+  });
+  return [...byDate.values()].sort((a,b) => a.date.localeCompare(b.date));
+}
+function migrateLegacy(){
+  if (localStorage.getItem(STORAGE_KEY) || !localStorage.getItem(LEGACY_KEY)) return;
+  try{
+    const legacy = JSON.parse(localStorage.getItem(LEGACY_KEY));
+    const records = Object.entries(legacy).map(([date,data]) => {
+      const exercises = Object.entries(data.exercises || {}).map(([id,ex]) => {
+        const name = EXERCISES.find(n => id.includes(n)) || id.replaceAll("_"," ");
+        const done = (ex.sets || []).filter(s => s.done);
+        const base = done[0] || (ex.sets || [])[0] || { weight:0, reps:0 };
+        return { name, weight:Number(base.weight)||0, reps:Number(base.reps)||0, sets:done.length || (ex.sets || []).length || 1 };
       });
-      if (error) { console.warn('Supabase auth failed:', error.message); return; }
-    }
-    syncReady = true;
-    await pullFromCloud();
-  } catch (e) { console.warn('Supabase init failed:', e); }
+      return touchRecord({ id:crypto.randomUUID(), date, memo:data.memo || "", exercises });
+    }).filter(r => r.exercises.length);
+    if (records.length) localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+  }catch{}
 }
-
-// Pull all cloud data and merge with local (cloud wins if newer)
-async function pullFromCloud() {
-  if (!syncReady) return;
-  const { data: rows, error } = await sb.from('workouts').select('*');
-  if (error || !rows) return;
-  const local = JSON.parse(localStorage.getItem('muscle_log') || '{}');
-  let changed = false;
-  for (const row of rows) {
-    const cloudTime = new Date(row.updated_at).getTime();
-    const localEntry = local[row.date];
-    const localTime = localEntry?._syncedAt || 0;
-    if (cloudTime > localTime) {
-      local[row.date] = { ...row.data, _syncedAt: cloudTime };
-      changed = true;
-    }
-  }
-  if (changed) {
-    localStorage.setItem('muscle_log', JSON.stringify(local));
-    renderWorkout(); // Re-render with merged data
-  }
+function getCloudClient(){
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY || !window.supabase) return null;
+  if (!cloudClient) cloudClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, { auth:{ persistSession:true, autoRefreshToken:true } });
+  return cloudClient;
 }
-
-// Push a single day's data to cloud
-async function pushToCloud(dateKey, dayData) {
-  if (!syncReady) return;
-  // Strip sync metadata before pushing
-  const clean = { ...dayData };
-  delete clean._syncedAt;
-  const { error } = await sb.from('workouts').upsert({
-    date: dateKey, data: clean
-  });
-  if (!error) {
-    // Mark local as synced
-    const local = JSON.parse(localStorage.getItem('muscle_log') || '{}');
-    if (local[dateKey]) {
-      local[dateKey]._syncedAt = Date.now();
-      localStorage.setItem('muscle_log', JSON.stringify(local));
-    }
-  }
+function cloudErrorMessage(error){
+  const raw = String(error?.message || error || "");
+  const code = String(error?.code || "");
+  if (/Invalid login credentials/i.test(raw)) return "メールアドレスまたはパスワードが違います";
+  if (/Email not confirmed/i.test(raw)) return "確認メールの認証が必要です";
+  if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(raw)) return "Supabaseに接続できません。プロジェクトURLを確認してください";
+  if (/relation .*muscle_log_records|muscle_log_records|42P01|PGRST/i.test(raw + code)) return "Supabase側の記録テーブルがまだ作成されていません";
+  if (/row-level security|permission denied|42501/i.test(raw + code)) return "Supabase側の権限設定を確認してください";
+  return raw || "同期に失敗しました";
 }
-
-// Push all local data (for initial sync or recovery)
-async function pushAllToCloud() {
-  if (!syncReady) return;
-  const local = JSON.parse(localStorage.getItem('muscle_log') || '{}');
-  const rows = Object.entries(local).map(([date, dayData]) => {
-    const clean = { ...dayData };
-    delete clean._syncedAt;
-    return { date, data: clean };
-  });
-  if (rows.length > 0) await sb.from('workouts').upsert(rows);
+function setCloudStatus(status, message=""){
+  cloudStatus = status;
+  cloudMessage = message;
+  renderAuthPanel();
 }
-
-// Sync indicator in header
-function updateSyncStatus(status) {
-  let el = document.getElementById('syncStatus');
-  if (!el) {
-    el = document.createElement('span');
-    el.id = 'syncStatus';
-    el.style.cssText = 'font-size:0.6rem;color:var(--gray-400);font-weight:600';
-    document.querySelector('.header__date').parentElement.appendChild(el);
-  }
-  el.textContent = status;
-  if (status === '✓') setTimeout(() => { el.textContent = ''; }, 2000);
-}
-
-// Init on load
-sbInit().then(() => { if (syncReady) updateSyncStatus('✓'); });
-
-const PROGRAM = {
-  upper: {
-    label: '上半身の日', badge: 'UPPER BODY', badgeClass: 'hero__badge--upper',
-    exercises: [
-      { id:'bench_press', name:'ダンベルベンチプレス', target:'胸・肩の前・二の腕の裏', defaultSets:3, defaultWeight:6.5, defaultReps:10,
-        help:{ title:'胸のプレス（ダンベルベンチプレス）', body:`<h3>どんな動き？</h3><p>ベンチに仰向けに寝て、両手のダンベルを胸の上で押し上げる動きです。胸の筋肉をメインで鍛えます。</p>
-<h3>鍛えられる部位</h3><p><strong>大胸筋</strong>（胸の大きな筋肉）がメイン。肩の前側と二の腕の裏側も同時に使います。</p>
-<h3>正しいやり方</h3>
-<ul><li>ベンチに仰向けになり、足裏を床にしっかりつける</li><li><strong>肩甲骨を寄せて胸を張る</strong>（背中に拳1個分のアーチを作るイメージ）</li><li>ダンベルを胸の横まで下ろす（肘の角度は約90度）</li><li>息を吐きながら、まっすぐ上に押し上げる</li><li><strong>下ろすときは2〜3秒かけてゆっくり</strong>（ここが一番効く）</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>肩甲骨が寄っていない → 胸ではなく肩に負荷がかかり、肩を痛めやすい</li><li>下ろしが浅い → 胸の筋肉がしっかり伸びないので効果が半減</li><li>腰を反りすぎる → 腰痛の原因になる</li></ul>
-<h3>目安</h3><p>3セット × 8〜12回。「あと2回がキツい」くらいの重量がちょうどいい。</p>` } },
-
-      { id:'one_arm_row', name:'ワンハンドロウ', target:'背中・力こぶ', defaultSets:3, defaultWeight:6.5, defaultReps:10,
-        help:{ title:'背中の引き上げ（ワンハンドダンベルロウ）', body:`<h3>どんな動き？</h3><p>ベンチに片手と片膝をついて、もう片方の手でダンベルを引き上げる動きです。背中の大きな筋肉を鍛えます。</p>
-<h3>鍛えられる部位</h3><p><strong>広背筋</strong>（背中の広い筋肉）と<strong>僧帽筋</strong>（背中の上部）がメイン。力こぶの筋肉も補助的に使います。</p>
-<h3>正しいやり方</h3>
-<ul><li>ベンチに右手と右膝をつき、左手でダンベルを持つ</li><li>背中をまっすぐ（テーブルのように平ら）にする</li><li><strong>肘を天井に引き上げるイメージ</strong>でダンベルを持ち上げる</li><li>脇腹あたりまで引いたら1秒キープ</li><li>ゆっくり下ろす</li><li>片側が終わったら反対側も同じ回数</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>腕の力だけで持ち上げる → 背中に効かない。「肘を引く」意識が大事</li><li>体が回転する → 胴体は固定。動くのは腕だけ</li><li>背中が丸まる → 腰を痛める原因</li></ul>
-<h3>なぜ必要？</h3><p>胸のプレスだけだと前側の筋肉ばかり発達して、猫背の原因になります。背中も鍛えることで姿勢が良くなります。</p>
-<h3>目安</h3><p>左右それぞれ3セット × 8〜12回。</p>` } },
-
-      { id:'shoulder_press', name:'ショルダープレス', target:'肩全体・二の腕の裏', defaultSets:3, defaultWeight:4.5, defaultReps:10,
-        help:{ title:'肩の押し上げ（ショルダープレス）', body:`<h3>どんな動き？</h3><p>座った状態（またはベンチに背もたれを作って座り）、ダンベルを耳の横から頭上に押し上げる動きです。</p>
-<h3>鍛えられる部位</h3><p><strong>三角筋</strong>（肩を覆う筋肉）全体がメイン。二の腕の裏側も補助的に使います。</p>
-<h3>正しいやり方</h3>
-<ul><li>ベンチに座る（背もたれがあれば寄りかかってOK）</li><li>ダンベルを耳の横に構える（肘は90度くらい）</li><li>息を吐きながら、まっすぐ上に押し上げる</li><li>腕を伸ばしきる直前で止めて、ゆっくり下ろす</li><li><strong>ダンベル同士をぶつけない</strong>（上で少し離す）</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>腰を反って押し上げる → 肩ではなく胸に効いてしまう＋腰を痛める</li><li>重すぎる重量 → 肩は怪我しやすい関節。軽めから始める</li><li>下ろしが浅い → 可動域が狭いと効果が薄い</li></ul>
-<h3>なぜ必要？</h3><p>肩の筋肉は見た目の印象に大きく影響します。鍛えると肩幅が広がり、逆三角形の体型に近づきます。</p>
-<h3>目安</h3><p>3セット × 8〜12回。胸のプレスより軽い重量でOK。</p>` } },
-
-      { id:'arm_curl', name:'アームカール', target:'力こぶ（上腕二頭筋）', defaultSets:3, defaultWeight:4.5, defaultReps:12,
-        help:{ title:'力こぶの巻き上げ（アームカール）', body:`<h3>どんな動き？</h3><p>立った状態でダンベルを持ち、肘を固定して前腕を巻き上げる動きです。力こぶを鍛えます。</p>
-<h3>鍛えられる部位</h3><p><strong>上腕二頭筋</strong>（力こぶ）がメインです。</p>
-<h3>正しいやり方</h3>
-<ul><li>足を肩幅に開いて立つ</li><li><strong>肘を体の横に固定する</strong>（肘を動かさないのが最重要）</li><li>手のひらを上に向けて、ゆっくり巻き上げる</li><li>上まで来たら1秒キープ</li><li>ゆっくり下ろす（反動を使わない）</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>体を振って反動で上げる → 力こぶに効かない。体は直立のまま</li><li>肘が前後に動く → 肘を脇腹に固定する意識</li><li>手首が曲がる → 手首を痛める。手首はまっすぐ</li></ul>
-<h3>目安</h3><p>3セット × 10〜15回。反動なしで丁寧にできる重量を選ぶ。</p>` } },
-
-      { id:'tricep_kickback', name:'トライセプスキックバック', target:'二の腕の裏（上腕三頭筋）', defaultSets:3, defaultWeight:2.5, defaultReps:12,
-        help:{ title:'二の腕の伸ばし（キックバック）', body:`<h3>どんな動き？</h3><p>ベンチに片手をついて前傾姿勢になり、ダンベルを持った腕を後ろに伸ばす動きです。二の腕の裏を鍛えます。</p>
-<h3>鍛えられる部位</h3><p><strong>上腕三頭筋</strong>（二の腕の裏側）。腕を伸ばす動きで使う筋肉です。</p>
-<h3>正しいやり方</h3>
-<ul><li>ベンチに片手と片膝をつく（背中の引き上げと同じ姿勢）</li><li>上体を床と平行にする</li><li>肘を90度に曲げた状態からスタート</li><li><strong>肘の位置を固定したまま</strong>、腕を後ろにまっすぐ伸ばす</li><li>伸ばしきったところで1秒キープ</li><li>ゆっくり戻す。片側が終わったら反対も</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>肘が下がる → 三頭筋に効かない。肘は体と同じ高さをキープ</li><li>上体が起きている → 前傾が足りないと負荷が減る</li><li>反動で振る → 怪我の原因。ゆっくり丁寧に</li></ul>
-<h3>目安</h3><p>左右それぞれ3セット × 10〜15回。</p>` } },
-    ],
-  },
-  lower: {
-    label: '下半身 + 体幹の日', badge: 'LOWER + CORE', badgeClass: 'hero__badge--lower',
-    exercises: [
-      { id:'squat', name:'スクワット', target:'太もも前・お尻', defaultSets:3, defaultWeight:6.5, defaultReps:15,
-        help:{ title:'スクワット（ダンベル持ち）', body:`<h3>どんな動き？</h3><p>両手にダンベルを持って、しゃがんで立ち上がる動きです。下半身の王道トレーニング。</p>
-<h3>鍛えられる部位</h3><p><strong>大腿四頭筋</strong>（太もも前面）と<strong>大殿筋</strong>（お尻）がメイン。太もも裏も補助的に使います。</p>
-<h3>正しいやり方</h3>
-<ul><li>ダンベルを両手に持ち、体の横に下げる</li><li>足を肩幅に開き、つま先をやや外側に向ける</li><li><strong>お尻を後ろに引くように</strong>腰を落とす（椅子に座るイメージ）</li><li>太ももが床と平行になるまで下げる</li><li>かかとで地面を押すように立ち上がる</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>膝が内側に入る → 膝を痛める。つま先と同じ方向に</li><li>背中が丸まる → 腰痛の原因。胸を張って背筋を伸ばす</li><li>浅すぎる → 太ももが平行になるまで下げないと効果が薄い</li></ul>
-<h3>目安</h3><p>3セット × 12〜15回。</p>` } },
-
-      { id:'romanian_deadlift', name:'ルーマニアンデッドリフト', target:'太もも裏・お尻・腰', defaultSets:3, defaultWeight:6.5, defaultReps:12,
-        help:{ title:'もも裏のストレッチ（ルーマニアンデッドリフト）', body:`<h3>どんな動き？</h3><p>ダンベルを持って、膝を軽く曲げたまま上体を前に倒す動きです。太ももの裏側を強くストレッチしながら鍛えます。</p>
-<h3>鍛えられる部位</h3><p><strong>ハムストリングス</strong>（太もも裏）と<strong>大殿筋</strong>（お尻）がメイン。脊柱起立筋（腰〜背中の姿勢を保つ筋肉）も使います。</p>
-<h3>正しいやり方</h3>
-<ul><li>ダンベルを両手に持ち、太ももの前に構える</li><li>足は腰幅、膝はやや曲げた状態で固定</li><li><strong>お尻を後ろに突き出すように</strong>上体を前に倒す</li><li>ダンベルを太ももに沿わせるようにスネの位置まで下ろす</li><li>太もも裏に「ピーン」と張りを感じたら止めて、お尻を締めながら起き上がる</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>背中が丸まる → 腰を痛める。<strong>背中はずっとまっすぐ</strong></li><li>膝を曲げすぎる → スクワットになってしまう。膝の角度は最初から固定</li><li>ダンベルが体から離れる → 太ももに沿わせて下ろす</li></ul>
-<h3>なぜ必要？</h3><p>スクワットだけだと太ももの前側ばかり鍛わります。裏側も鍛えることで膝の怪我予防とお尻の引き締めに効果大。</p>
-<h3>目安</h3><p>3セット × 10〜12回。太もも裏の張りを感じながらゆっくり。</p>` } },
-
-      { id:'abs', name:'クランチ', target:'お腹（腹直筋）', defaultSets:3, defaultWeight:0, defaultReps:20,
-        help:{ title:'腹筋（クランチ）', body:`<h3>どんな動き？</h3><p>仰向けに寝て、上体を少しだけ起こす動きです。完全に起き上がる必要はありません。</p>
-<h3>鍛えられる部位</h3><p><strong>腹直筋</strong>（お腹の正面の筋肉＝いわゆる「シックスパック」）です。</p>
-<h3>正しいやり方</h3>
-<ul><li>仰向けに寝て膝を90度に曲げる（足裏は床につける）</li><li>手は胸の前で交差するか、耳の横に軽く添える</li><li><strong>おへそを覗き込むように</strong>肩甲骨が浮くまで上体を起こす</li><li>完全に起き上がる必要はない（30度くらいでOK）</li><li>下ろすときもゆっくり（背中をベタッと床につけない）</li></ul>
-<h3>ありがちな失敗</h3>
-<ul><li>首の後ろで手を組む → 首を引っ張って痛める原因</li><li>反動で勢いよく起き上がる → 腹筋に効いていない</li><li>速すぎる → ゆっくりやるほど効く</li></ul>
-<h3>レベルアップ</h3><p>慣れてきたらダンベルを胸に抱えて負荷を追加できます。</p>
-<h3>目安</h3><p>3セット × 15〜20回。</p>` } },
-    ],
-  },
-};
-
-// Dumbbell weight ladder (per hand)
-const WEIGHT_LADDER = [0, 2.5, 3.5, 4.5, 5.5, 6.5, 8, 9, 10, 11.5, 13.5, 16, 18, 20.5, 22.5, 24];
-
-function weightUp(current) {
-  for (const w of WEIGHT_LADDER) { if (w > current) return w; }
-  return current;
-}
-function weightDown(current) {
-  for (let i = WEIGHT_LADDER.length - 1; i >= 0; i--) { if (WEIGHT_LADDER[i] < current) return WEIGHT_LADDER[i]; }
-  return current;
-}
-
-const BASE_DATE = new Date(2026, 2, 23);
-const DAY_BOUNDARY_HOUR = 4; // Treat 0:00-3:59 as previous day
-function effectiveDate(d) { const e = new Date(d || new Date()); if (e.getHours() < DAY_BOUNDARY_HOUR) e.setDate(e.getDate() - 1); e.setHours(0,0,0,0); return e; }
-// Day type overrides (rest day → training day)
-const dayTypeOverrides = {};
-// Load overrides from saved data on startup
-(function loadOverrides() {
+async function initCloud(){
+  const client = getCloudClient();
+  if (!client) { setCloudStatus("local"); return; }
   try {
-    const data = JSON.parse(localStorage.getItem('muscle_log') || '{}');
-    Object.keys(data).forEach(k => {
-      if (data[k]?.type && data[k].type !== 'rest') {
-        // Check if the scheduled type for this date is 'rest'
-        const d = new Date(k + 'T12:00:00');
-        const base = new Date(2026, 2, 23); base.setHours(0,0,0,0);
-        const diff = Math.round((d - base) / 86400000);
-        const cycle = ((diff % 4) + 4) % 4;
-        const scheduled = cycle === 0 ? 'upper' : cycle === 2 ? 'lower' : 'rest';
-        if (scheduled === 'rest') dayTypeOverrides[k] = data[k].type;
+    const { data:{ session } } = await client.auth.getSession();
+    cloudUser = session?.user || null;
+    if (cloudUser) {
+      setCloudStatus("syncing");
+      await pullCloudRecords();
+      setCloudStatus("online");
+    } else {
+      setCloudStatus("local");
+    }
+    client.auth.onAuthStateChange(async (_event, session) => {
+      cloudUser = session?.user || null;
+      if (cloudUser) {
+        try {
+          setCloudStatus("syncing");
+          await pullCloudRecords();
+          setCloudStatus("online");
+        } catch (e) {
+          console.warn("Supabase auth sync failed", e);
+          setCloudStatus("error", cloudErrorMessage(e));
+        }
+      } else {
+        setCloudStatus("local");
       }
+      refreshActiveScreen();
     });
-  } catch {}
-})();
-
-function getDayType(date) {
-  const d = effectiveDate(date);
-  const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-  if (dayTypeOverrides[key]) return dayTypeOverrides[key];
-  const base = new Date(BASE_DATE); base.setHours(0,0,0,0);
-  const diff = Math.round((d - base) / (86400000));
-  const cycle = ((diff % 4) + 4) % 4;
-  return cycle === 0 ? 'upper' : cycle === 2 ? 'lower' : 'rest';
-}
-
-const STORAGE_KEY = 'muscle_log';
-function loadData() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; } }
-let _saveDebounce = null;
-function saveData(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  // Debounced cloud sync (push changed day)
-  clearTimeout(_saveDebounce);
-  _saveDebounce = setTimeout(() => {
-    const key = dateKey(getActiveDate());
-    if (data[key]) pushToCloud(key, data[key]);
-  }, 2000);
-}
-function dateKey(d) { const dt = effectiveDate(d); return `${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}-${String(dt.getDate()).padStart(2,'0')}`; }
-function getLastRecord(exId, before) {
-  const data = loadData();
-  for (const k of Object.keys(data).filter(k => k < before).sort().reverse())
-    if (data[k]?.exercises?.[exId]) return data[k].exercises[exId];
-  return null;
-}
-
-// Stats helpers
-function getStreak() {
-  const data = loadData(); let streak = 0; const d = new Date();
-  d.setDate(d.getDate() - 1); // start from yesterday
-  while (true) {
-    const type = getDayType(d);
-    if (type === 'rest') { d.setDate(d.getDate() - 1); continue; }
-    if (data[dateKey(d)]?.completedAt) { streak++; d.setDate(d.getDate() - 1); }
-    else break;
-  }
-  // Check today
-  if (data[dateKey()]?.completedAt) streak++;
-  return streak;
-}
-function getTotalSessions() {
-  return Object.values(loadData()).filter(d => d.completedAt).length;
-}
-function getLatestPR() {
-  const data = loadData(); const allEx = [...PROGRAM.upper.exercises, ...PROGRAM.lower.exercises];
-  let best = null;
-  for (const ex of allEx) {
-    let maxW = 0;
-    const keys = Object.keys(data).sort();
-    for (const k of keys) {
-      const sets = data[k]?.exercises?.[ex.id]?.sets;
-      if (!sets) continue;
-      const w = Math.max(...sets.filter(s => s.done).map(s => s.weight), 0);
-      if (w > maxW && maxW > 0) best = { name: ex.name, weight: w, diff: w - maxW };
-      if (w > maxW) maxW = w;
-    }
-  }
-  return best;
-}
-
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('is-visible');
-  setTimeout(() => el.classList.remove('is-visible'), 3000);
-}
-
-// PR detection
-function checkPR(exId, weight) {
-  if (weight <= 0) return false;
-  const data = loadData(), today = dateKey();
-  let historyMax = 0;
-  for (const k of Object.keys(data)) {
-    if (k >= today) continue;
-    const sets = data[k]?.exercises?.[exId]?.sets;
-    if (sets) historyMax = Math.max(historyMax, ...sets.filter(s => s.done).map(s => s.weight), 0);
-  }
-  return weight > historyMax && historyMax > 0;
-}
-
-function showPRCelebration(name, weight) {
-  showToast(`🎉 PR更新! ${name} ${weight}kg`);
-  const colors = ['#f05a28','#ff7849','#22c55e','#3b82f6','#fbbf24'];
-  for (let i = 0; i < 15; i++) {
-    const p = document.createElement('div');
-    p.className = 'confetti';
-    p.style.setProperty('--x', `${(Math.random()-0.5)*250}px`);
-    p.style.setProperty('--y', `${-Math.random()*200-50}px`);
-    p.style.background = colors[Math.floor(Math.random()*colors.length)];
-    p.style.left = '50%'; p.style.top = '60%';
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 1000);
+  } catch (e) {
+    console.warn("Supabase init failed", e);
+    setCloudStatus("error", cloudErrorMessage(e));
   }
 }
-
-// Rest timer
-const SETTINGS_KEY = 'muscle_log_settings';
-function loadSettings() { try { return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}; } catch { return {}; } }
-function saveSettings(s) { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); }
-let restTimerInterval = null;
-function getRestDuration() { return loadSettings().restTimerSeconds || 90; }
-
-function startRestTimer() {
-  clearRestTimer();
-  let duration = getRestDuration(), remaining = duration;
-  const el = document.getElementById('restTimer');
-  const timeEl = document.getElementById('restTimerTime');
-  const fillEl = document.getElementById('restTimerFill');
-  el.style.display = 'flex';
-  timeEl.textContent = remaining;
-  fillEl.style.width = '100%';
-
-  restTimerInterval = setInterval(() => {
-    remaining--;
-    timeEl.textContent = remaining;
-    fillEl.style.width = `${(remaining / duration) * 100}%`;
-    if (remaining <= 0) {
-      clearRestTimer();
-      playTimerSound();
-    }
-  }, 1000);
+async function pullCloudRecords(){
+  const client = getCloudClient();
+  if (!client || !cloudUser) return;
+  const { data, error } = await client
+    .from("muscle_log_records")
+    .select("id,record_date,memo,exercises,updated_at")
+    .order("record_date", { ascending:true });
+  if (error) { throw error; }
+  const cloudRecords = (data || []).map(row => ({
+    id: row.id,
+    date: row.record_date,
+    memo: row.memo || "",
+    exercises: Array.isArray(row.exercises) ? row.exercises : [],
+    updatedAt: row.updated_at || new Date().toISOString(),
+  }));
+  const localRecords = loadRecords();
+  const merged = mergeRecords(localRecords, cloudRecords);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+  if (localRecords.length) await pushAllRecordsToCloud(merged);
+  refreshActiveScreen();
 }
-
-function clearRestTimer() {
-  if (restTimerInterval) clearInterval(restTimerInterval);
-  restTimerInterval = null;
-  const el = document.getElementById('restTimer');
-  if (el) el.style.display = 'none';
-}
-
-function playTimerSound() {
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    [0, 200, 400].forEach(delay => {
-      setTimeout(() => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain); gain.connect(ctx.destination);
-        osc.frequency.value = 880; gain.gain.value = 0.3;
-        osc.start(); osc.stop(ctx.currentTime + 0.12);
-      }, delay);
+function scheduleCloudSave(records){
+  if (!cloudUser) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(() => {
+    pushAllRecordsToCloud(records).catch(e => {
+      console.warn("Supabase save failed", e);
+      setCloudStatus("error", cloudErrorMessage(e));
     });
-  } catch {}
+  }, 800);
 }
-
-// Timer skip & duration config via tap
-document.getElementById('restTimerSkip').addEventListener('click', clearRestTimer);
-document.getElementById('restTimerTime').addEventListener('click', () => {
-  const options = [60, 90, 120];
-  const current = getRestDuration();
-  const next = options[(options.indexOf(current) + 1) % options.length];
-  const s = loadSettings(); s.restTimerSeconds = next; saveSettings(s);
-  showToast(`休憩 ${next}秒に変更`);
-  // Restart if running
-  if (restTimerInterval) startRestTimer();
-});
-
-const DOW = ['日','月','火','水','木','金','土'];
-function formatHeaderDate(d) { return `${d.getMonth()+1}/${d.getDate()}（${DOW[d.getDay()]}）`; }
-
-// Tab navigation
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
-    btn.classList.add('is-active');
-    document.getElementById(btn.dataset.screen).classList.add('is-active');
-    if (btn.dataset.screen === 'screenCalendar') renderCalendar();
-    if (btn.dataset.screen === 'screenProgress') renderProgress();
-  });
-});
-
-// Help modal
-function showHelp(ex) {
-  document.getElementById('helpTitle').textContent = ex.help.title;
-  document.getElementById('helpBody').innerHTML = ex.help.body;
-  document.getElementById('helpModal').classList.add('is-visible');
+async function pushAllRecordsToCloud(records = loadRecords()){
+  const client = getCloudClient();
+  if (!client || !cloudUser) return;
+  setCloudStatus("syncing");
+  const rows = records.map(record => ({
+    user_id: cloudUser.id,
+    record_date: record.date,
+    memo: record.memo || "",
+    exercises: record.exercises || [],
+  }));
+  if (!rows.length) { setCloudStatus("online"); return; }
+  const { error } = await client
+    .from("muscle_log_records")
+    .upsert(rows, { onConflict:"user_id,record_date" });
+  if (error) { setCloudStatus("error"); throw error; }
+  setCloudStatus("online");
 }
-document.getElementById('helpClose').addEventListener('click', () => document.getElementById('helpModal').classList.remove('is-visible'));
-document.getElementById('helpModal').addEventListener('click', e => { if (e.target.id === 'helpModal') document.getElementById('helpModal').classList.remove('is-visible'); });
-
-// ── Workout ──
-// Workout summary
-function buildSummary() {
-  const todayKey = dateKey(), data = loadData(), todayData = data[todayKey];
-  if (!todayData?.exercises) return null;
-  const type = todayData.type, program = PROGRAM[type];
-  let totalVolume = 0, totalSets = 0, totalReps = 0;
-  const prs = [], comparisons = [];
-
-  program.exercises.forEach(ex => {
-    const exData = todayData.exercises[ex.id];
-    if (!exData) return;
-    const doneSets = exData.sets.filter(s => s.done);
-    doneSets.forEach(s => { totalVolume += s.weight * s.reps; totalSets++; totalReps += s.reps; });
-
-    // PR check
-    const todayMax = Math.max(...doneSets.map(s => s.weight), 0);
-    let historyMax = 0;
-    Object.keys(data).filter(k => k < todayKey).forEach(k => {
-      const sets = data[k]?.exercises?.[ex.id]?.sets;
-      if (sets) historyMax = Math.max(historyMax, ...sets.filter(s=>s.done).map(s=>s.weight), 0);
-    });
-    if (todayMax > historyMax && historyMax > 0) prs.push({ name: ex.name, weight: todayMax, prev: historyMax });
-
-    // Compare to last session
-    const last = getLastRecord(ex.id, todayKey);
-    if (last) {
-      const lastVol = last.sets.filter(s=>s.done).reduce((sum,s) => sum + s.weight*s.reps, 0);
-      const todayVol = doneSets.reduce((sum,s) => sum + s.weight*s.reps, 0);
-      comparisons.push({ name: ex.name, diff: todayVol - lastVol });
-    }
-  });
-
-  return { totalVolume, totalSets, totalReps, prs, comparisons, memo: todayData.memo || '' };
+function refreshActiveScreen(){
+  const active = document.querySelector(".screen.active")?.id || "homeScreen";
+  if (active === "homeScreen") renderHome();
+  if (active === "recordsScreen") renderRecords();
+  if (active === "analyticsScreen") renderAnalytics();
+  if (active === "settingsScreen") renderAuthPanel();
 }
-
-function showSummaryModal() {
-  const summary = buildSummary();
-  if (!summary) return;
-  const { totalVolume, totalSets, totalReps, prs, comparisons, memo } = summary;
-
-  let html = `<div class="summary-stats">
-    <div class="summary-stat"><div class="summary-stat__value">${Math.round(totalVolume).toLocaleString()}</div><div class="summary-stat__label">総ボリューム(kg)</div></div>
-    <div class="summary-stat"><div class="summary-stat__value">${totalSets}</div><div class="summary-stat__label">セット数</div></div>
-    <div class="summary-stat"><div class="summary-stat__value">${totalReps}</div><div class="summary-stat__label">レップ数</div></div>
-  </div>`;
-
-  if (prs.length > 0) {
-    html += `<div class="summary-section"><div class="summary-section__title">PR更新</div>`;
-    prs.forEach(p => { html += `<div class="summary-pr">🎉 ${p.name} ${p.weight}kg（前回 ${p.prev}kg）</div>`; });
-    html += '</div>';
-  }
-
-  if (comparisons.length > 0) {
-    html += `<div class="summary-section"><div class="summary-section__title">前回との比較（ボリューム）</div>`;
-    comparisons.forEach(c => {
-      const cls = c.diff > 0 ? 'up' : c.diff < 0 ? 'down' : 'same';
-      const sign = c.diff > 0 ? '+' : '';
-      html += `<div class="summary-compare"><span>${c.name}</span><span class="summary-compare__diff summary-compare__diff--${cls}">${sign}${Math.round(c.diff)}kg</span></div>`;
-    });
-    html += '</div>';
-  }
-
-  if (memo) {
-    html += `<div class="summary-section"><div class="summary-section__title">メモ</div><p style="font-size:0.85rem;color:var(--gray-600);line-height:1.6">${memo.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</p></div>`;
-  }
-
-  document.getElementById('summaryBody').innerHTML = html;
-  document.getElementById('summaryModal').classList.add('is-visible');
-}
-
-// Summary modal close handlers
-document.getElementById('summaryClose').addEventListener('click', () => document.getElementById('summaryModal').classList.remove('is-visible'));
-document.getElementById('summaryDone').addEventListener('click', () => document.getElementById('summaryModal').classList.remove('is-visible'));
-document.getElementById('summaryModal').addEventListener('click', e => { if (e.target.id === 'summaryModal') document.getElementById('summaryModal').classList.remove('is-visible'); });
-
-let selectedDate = null; // null = today, Date = past date
-
-function selectDate(date) {
-  selectedDate = date;
-  // Switch to workout tab
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
-  document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
-  document.getElementById('screenWorkout').classList.add('is-active');
-  renderWorkout();
-}
-
-function getActiveDate() { return selectedDate || new Date(); }
-
-function renderWorkout() {
-  const today = getActiveDate(), todayKey = dateKey(today);
-  const isToday = !selectedDate;
-  const headerDateEl = document.getElementById('headerDate');
-  if (isToday) {
-    headerDateEl.innerHTML = formatHeaderDate(today);
-  } else {
-    headerDateEl.innerHTML = `${formatHeaderDate(today)} の記録 <span style="color:var(--orange);font-weight:700;margin-left:6px;cursor:pointer" id="backToToday">← 今日</span>`;
-    document.getElementById('backToToday')?.addEventListener('click', () => { selectedDate = null; renderWorkout(); });
-  }
-  const type = getDayType(today);
-  const heroEl = document.getElementById('heroCard');
-  const progressEl = document.getElementById('progressBar');
-  const statsEl = document.getElementById('statsChips');
-  const listEl = document.getElementById('exerciseList');
-  const btnComplete = document.getElementById('btnComplete');
-
-  // Stats chips (always show)
-  const streak = getStreak(), total = getTotalSessions(), pr = getLatestPR();
-  statsEl.innerHTML = `<div class="stats">
-    <div class="stat-chip"><div class="stat-chip__value">${streak}</div><div class="stat-chip__label">連続</div></div>
-    <div class="stat-chip"><div class="stat-chip__value">${total}</div><div class="stat-chip__label">累計</div></div>
-    <div class="stat-chip"><div class="stat-chip__value">${pr ? pr.weight+'kg' : '-'}</div><div class="stat-chip__label">${pr ? pr.name.slice(0,6) : '直近PR'}</div></div>
-  </div>`;
-
-  if (type === 'rest') {
-    // Find next training day
-    const nextDay = new Date(today);
-    let nextType = 'rest';
-    for (let i = 1; i <= 3; i++) {
-      const d = new Date(today); d.setDate(d.getDate() + i);
-      nextType = getDayType(d);
-      if (nextType !== 'rest') { nextDay.setDate(today.getDate() + i); break; }
-    }
-    const nextProgram = PROGRAM[nextType];
-    const nextLabel = `${nextDay.getMonth()+1}/${nextDay.getDate()}（${DOW[nextDay.getDay()]}）`;
-
-    heroEl.innerHTML = `<div class="hero hero--rest"><div class="hero__top"><div class="hero__day">今日は休息日</div><span class="hero__badge hero__badge--rest">REST</span></div><div class="hero__meta"><span>筋肉は休んでいる間に成長します</span></div></div>`;
-    progressEl.innerHTML = '';
-
-    let previewHtml = `<div class="rest-card"><div class="rest-card__icon">&#128170;</div><div class="rest-card__title">次のトレーニング</div><div class="rest-card__desc">${nextLabel}　${nextProgram.label}</div></div>`;
-
-    // Show next day's exercises as read-only preview
-    previewHtml += '<div style="display:flex;flex-direction:column;gap:8px;margin-top:4px">';
-    nextProgram.exercises.forEach(ex => {
-      previewHtml += `<div class="exercise-card" style="padding:12px;opacity:.85" data-preview-ex="${ex.id}"><div class="exercise-card__head"><div class="exercise-card__info"><div class="exercise-card__name">${ex.name}</div><div class="exercise-card__target">${ex.target}</div></div><button class="exercise-card__help">?</button></div></div>`;
-    });
-    previewHtml += '</div>';
-
-    // "Train anyway" buttons
-    previewHtml += `<div class="rest-override">
-      <button class="rest-override__btn" data-override="upper"><div class="rest-override__label">上半身やる</div><div class="rest-override__sub">UPPER BODY</div></button>
-      <button class="rest-override__btn" data-override="lower"><div class="rest-override__label">下半身やる</div><div class="rest-override__sub">LOWER + CORE</div></button>
-    </div>`;
-
-    listEl.innerHTML = previewHtml;
-    btnComplete.style.display = 'none';
-    document.getElementById('memoCard').style.display = 'none';
-
-    // Attach help events to preview cards
-    listEl.querySelectorAll('[data-preview-ex]').forEach(card => {
-      const exId = card.dataset.previewEx;
-      const ex = nextProgram.exercises.find(e => e.id === exId);
-      if (ex) {
-        card.querySelector('.exercise-card__help').addEventListener('click', () => showHelp(ex));
-        card.querySelector('.exercise-card__name').addEventListener('click', () => showHelp(ex));
-      }
-    });
-
-    // Rest day override: start workout anyway
-    listEl.querySelectorAll('[data-override]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const overrideType = btn.dataset.override;
-        const data = loadData(), key = dateKey(getActiveDate());
-        data[key] = { type: overrideType, exercises: {}, completedAt: null, memo: '' };
-        saveData(data);
-        dayTypeOverrides[key] = overrideType;
-        renderWorkout();
-      });
-    });
+function renderAuthPanel(){
+  const panel = document.getElementById("authPanel");
+  if (!panel) return;
+  const statusLabel = cloudStatus === "online" ? "同期中" : cloudStatus === "syncing" ? "同期処理中" : cloudStatus === "error" ? "同期エラー" : "ローカル保存";
+  const statusClass = cloudStatus === "online" || cloudStatus === "syncing" ? "" : cloudStatus === "error" ? "error" : "local";
+  const messageHtml = cloudMessage ? `<p>${escapeHtml(cloudMessage)}</p>` : "";
+  if (cloudUser) {
+    panel.innerHTML = `<div><span class="sync-state ${statusClass}">${statusLabel}</span></div><p>${escapeHtml(cloudUser.email || "ログイン中")}</p>${messageHtml}<div class="auth-row"><button class="outline-btn" id="syncNow" type="button">今すぐ同期</button><button class="outline-btn" id="cloudLogout" type="button">ログアウト</button></div>`;
+    document.getElementById("syncNow").onclick = () => pullCloudRecords().then(() => pushAllRecordsToCloud()).then(() => toast("同期しました")).catch(e => { const message = cloudErrorMessage(e); setCloudStatus("error", message); toast(message); });
+    document.getElementById("cloudLogout").onclick = async () => { const client = getCloudClient(); if (client) await client.auth.signOut(); cloudUser = null; setCloudStatus("local"); };
     return;
   }
-
-  const program = PROGRAM[type];
-  const exCount = program.exercises.length;
-  heroEl.innerHTML = `<div class="hero"><div class="hero__top"><div class="hero__day">${program.label}</div><span class="hero__badge ${program.badgeClass}">${program.badge}</span></div><div class="hero__meta"><span><strong>${exCount}</strong> 種目</span><span>約 <strong>${exCount * 8}</strong> 分</span></div></div>`;
-  btnComplete.style.display = '';
-
-  // Show memo card on training days
-  const memoCard = document.getElementById('memoCard');
-  const memoInput = document.getElementById('memoInput');
-  memoCard.style.display = '';
-  const fullData = loadData();
-  memoInput.value = fullData[todayKey]?.memo || '';
-  memoInput.oninput = () => {
-    const d = loadData();
-    if (!d[todayKey]) d[todayKey] = { type, exercises: {}, completedAt: null };
-    d[todayKey].memo = memoInput.value;
-    saveData(d);
-  };
-
-  const data = fullData, todayData = data[todayKey]?.exercises || {};
-  listEl.innerHTML = '';
-  let doneCount = 0;
-
-  program.exercises.forEach((ex, exIdx) => {
-    const raw = todayData[ex.id] || getLastRecord(ex.id, todayKey);
-    let sets;
-    if (todayData[ex.id]) {
-      sets = raw.sets;
-    } else if (raw) {
-      // Previous session: copy weight/reps but reset done flags
-      sets = raw.sets.map(s => ({ weight: s.weight, reps: s.reps, done: false }));
-    } else {
-      sets = Array.from({length: ex.defaultSets}, () => ({weight: ex.defaultWeight, reps: ex.defaultReps, done: false}));
-    }
-    const allDone = sets.every(s => s.done);
-    if (allDone) doneCount++;
-
-    const card = document.createElement('div');
-    card.className = 'exercise-card' + (allDone ? ' is-done' : '');
-    // Show previous session hint
-    const prev = getLastRecord(ex.id, todayKey);
-    const prevHint = prev ? `<div class="exercise-card__prev">前回: ${prev.sets.filter(s=>s.done).map(s=>`${s.weight}kg×${s.reps}`).join(' / ')}</div>` : '';
-
-    card.innerHTML = `
-      <div class="exercise-card__head"><div class="exercise-card__info"><div class="exercise-card__name">${ex.name}</div><div class="exercise-card__target">${ex.target}</div>${prevHint}</div><button class="exercise-card__help">?</button></div>
-      <div class="set-header"><span></span><span>kg</span><span>reps</span><span></span></div>
-      <div class="set-list" data-ex="${ex.id}">
-        ${sets.map((s, i) => renderSetRow(s, i, ex)).join('')}
-      </div>
-      <button class="btn-add-set" data-ex="${ex.id}">+ セット追加</button>`;
-    listEl.appendChild(card);
-
-    card.querySelector('.exercise-card__help').addEventListener('click', () => showHelp(ex));
-    card.querySelector('.exercise-card__name').addEventListener('click', () => showHelp(ex));
-    card.querySelector('.btn-add-set').addEventListener('click', () => {
-      const setList = card.querySelector('.set-list');
-      const count = setList.children.length;
-      const lastSet = sets[sets.length - 1] || {weight: ex.defaultWeight, reps: ex.defaultReps};
-      const row = document.createElement('div'); row.className = 'set-row'; row.dataset.set = count;
-      row.innerHTML = renderSetRowInner({...lastSet, done: false}, count, ex);
-      setList.appendChild(row);
-      attachSetEvents(row, ex);
-    });
-    card.querySelectorAll('.set-row').forEach(r => attachSetEvents(r, ex));
-  });
-
-  // Progress bar
-  progressEl.innerHTML = `<div class="progress"><div class="progress__bar"><div class="progress__fill" style="width:${(doneCount/exCount)*100}%"></div></div><div class="progress__label">${doneCount} / ${exCount}</div></div>`;
+  panel.innerHTML = `<div><span class="sync-state ${statusClass}">${statusLabel}</span></div>
+    ${messageHtml}
+    <p>メールアドレスとパスワードでログインすると、複数端末で同じ記録を同期できます。</p>
+    <input class="input" id="cloudEmail" type="email" placeholder="メールアドレス">
+    <input class="input" id="cloudPassword" type="password" placeholder="パスワード">
+    <div class="auth-row"><button class="primary-btn" id="cloudLogin" type="button">ログイン</button><button class="outline-btn" id="cloudSignup" type="button">新規登録</button></div>`;
+  document.getElementById("cloudLogin").onclick = () => cloudAuth("login");
+  document.getElementById("cloudSignup").onclick = () => cloudAuth("signup");
 }
-
-function renderSetRow(s, i, ex) {
-  return `<div class="set-row" data-set="${i}">${renderSetRowInner(s, i, ex)}</div>`;
-}
-function renderSetRowInner(s, i, ex) {
-  return `<span class="set-row__num">${i+1}</span>
-    <div class="stepper"><button class="stepper__btn" data-action="dec" data-field="weight">−</button><input class="stepper__val" type="number" inputmode="decimal" value="${s.weight}" data-field="weight"><button class="stepper__btn" data-action="inc" data-field="weight">+</button></div>
-    <div class="stepper"><button class="stepper__btn" data-action="dec" data-field="reps" data-step="1">−</button><input class="stepper__val" type="number" inputmode="numeric" value="${s.reps}" data-field="reps"><button class="stepper__btn" data-action="inc" data-field="reps" data-step="1">+</button></div>
-    <button class="set-row__check ${s.done?'is-done':''}" data-field="done"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></button>`;
-}
-
-function attachSetEvents(row, ex) {
-  row.querySelector('.set-row__check').addEventListener('click', function() {
-    const wasDone = this.classList.contains('is-done');
-    this.classList.toggle('is-done');
-    autoSave();
-    updateProgressBar();
-    if (!wasDone) {
-      // PR check
-      const weight = parseFloat(row.querySelector('[data-field="weight"]').value) || 0;
-      if (checkPR(ex.id, weight)) showPRCelebration(ex.name, weight);
-      // Start rest timer if there are unchecked sets remaining
-      const allChecks = row.closest('.set-list').querySelectorAll('.set-row__check');
-      const hasRemaining = [...allChecks].some(c => !c.classList.contains('is-done'));
-      if (hasRemaining) startRestTimer();
-    }
-  });
-  row.querySelectorAll('.stepper__btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const input = btn.parentElement.querySelector('.stepper__val');
-      const field = btn.dataset.field;
-      let val = parseFloat(input.value) || 0;
-      if (field === 'weight') {
-        // Use dumbbell weight ladder
-        val = btn.dataset.action === 'inc' ? weightUp(val) : weightDown(val);
-      } else {
-        // Reps: +/- 1
-        val = btn.dataset.action === 'inc' ? val + 1 : Math.max(1, val - 1);
-      }
-      input.value = val;
-      autoSave();
-    });
-  });
-  row.querySelectorAll('.stepper__val').forEach(input => input.addEventListener('change', autoSave));
-}
-
-function updateProgressBar() {
-  const type = getDayType(getActiveDate());
-  if (type === 'rest') return;
-  const exCount = PROGRAM[type].exercises.length;
-  let doneCount = 0;
-  document.querySelectorAll('.set-list').forEach(list => {
-    const checks = list.querySelectorAll('.set-row__check');
-    if (checks.length > 0 && [...checks].every(c => c.classList.contains('is-done'))) doneCount++;
-  });
-  const fill = document.querySelector('.progress__fill');
-  const label = document.querySelector('.progress__label');
-  if (fill) fill.style.width = `${(doneCount/exCount)*100}%`;
-  if (label) label.textContent = `${doneCount} / ${exCount}`;
-
-  // Toggle card opacity
-  document.querySelectorAll('.set-list').forEach(list => {
-    const card = list.closest('.exercise-card');
-    const checks = list.querySelectorAll('.set-row__check');
-    card.classList.toggle('is-done', checks.length > 0 && [...checks].every(c => c.classList.contains('is-done')));
-  });
-}
-
-function autoSave() {
-  const active = getActiveDate();
-  const todayKey = dateKey(active), data = loadData(), type = getDayType(active);
-  if (type === 'rest') return;
-  const exercises = {};
-  document.querySelectorAll('.set-list').forEach(list => {
-    const sets = [];
-    list.querySelectorAll('.set-row').forEach(row => {
-      sets.push({ weight: parseFloat(row.querySelector('[data-field="weight"]').value) || 0, reps: parseInt(row.querySelector('[data-field="reps"]').value) || 0, done: row.querySelector('.set-row__check').classList.contains('is-done') });
-    });
-    exercises[list.dataset.ex] = { sets };
-  });
-  data[todayKey] = { type, exercises, completedAt: data[todayKey]?.completedAt || null, memo: data[todayKey]?.memo || document.getElementById('memoInput')?.value || '' };
-  saveData(data);
-}
-
-document.getElementById('btnComplete').addEventListener('click', () => {
-  autoSave();
-  clearRestTimer();
-  const data = loadData(), key = dateKey(getActiveDate());
-  if (data[key]) { data[key].completedAt = new Date().toISOString(); saveData(data); }
-  showSummaryModal();
-  document.getElementById('btnComplete').disabled = true;
-  setTimeout(() => { document.getElementById('btnComplete').disabled = false; renderWorkout(); }, 1000);
-});
-
-// ── Calendar ──
-let calYear, calMonth;
-{ const now = new Date(); calYear = now.getFullYear(); calMonth = now.getMonth(); }
-function renderCalendar() {
-  document.getElementById('calLabel').textContent = `${calYear}年${calMonth+1}月`;
-  const grid = document.getElementById('calGrid'); grid.innerHTML = '';
-  DOW.forEach(d => { const el = document.createElement('div'); el.className = 'cal-grid__dow'; el.textContent = d; grid.appendChild(el); });
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-  const data = loadData(), today = dateKey();
-  for (let i = 0; i < firstDay; i++) { const el = document.createElement('div'); el.className = 'cal-cell cal-cell--empty'; grid.appendChild(el); }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dt = new Date(calYear, calMonth, d), key = dateKey(dt), type = getDayType(dt), hasData = !!data[key]?.completedAt;
-    let cls = 'cal-cell';
-    if (key === today) cls += ' cal-cell--today';
-    if (hasData && type === 'upper') cls += ' cal-cell--upper';
-    else if (hasData && type === 'lower') cls += ' cal-cell--lower';
-    else if (type === 'rest' && key <= today) cls += ' cal-cell--rest';
-    // Past & today dates are tappable
-    if (key <= today) cls += ' cal-cell--tappable';
-    const el = document.createElement('div'); el.className = cls; el.textContent = d; grid.appendChild(el);
-    if (key <= today) {
-      el.addEventListener('click', () => {
-        const tapDate = new Date(calYear, calMonth, d);
-        const tapKey = dateKey(tapDate);
-        const tapType = getDayType(tapDate);
-        if (tapKey === dateKey()) {
-          // Today: reset to normal view
-          selectedDate = null;
-          renderWorkout();
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
-          document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
-          document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
-          document.getElementById('screenWorkout').classList.add('is-active');
-        } else if (tapType === 'rest' && !data[tapKey]) {
-          // Past rest day with no data: let user pick type
-          selectedDate = tapDate;
-          renderWorkout(); // will show rest view with override buttons
-          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('is-active'));
-          document.querySelectorAll('.screen').forEach(s => s.classList.remove('is-active'));
-          document.querySelector('[data-screen="screenWorkout"]').classList.add('is-active');
-          document.getElementById('screenWorkout').classList.add('is-active');
-        } else {
-          selectDate(tapDate);
-        }
-      });
-    }
+async function cloudAuth(mode){
+  const email = document.getElementById("cloudEmail").value.trim();
+  const password = document.getElementById("cloudPassword").value;
+  if (!email || !password) { toast("メールアドレスとパスワードを入力してください"); return; }
+  const client = getCloudClient();
+  if (!client) { toast("Supabaseの読み込みに失敗しました"); return; }
+  setCloudStatus("syncing");
+  let result;
+  try {
+    result = mode === "signup"
+      ? await client.auth.signUp({ email, password })
+      : await client.auth.signInWithPassword({ email, password });
+  } catch (e) {
+    const message = cloudErrorMessage(e);
+    setCloudStatus("error", message);
+    toast(message);
+    return;
   }
-}
-document.getElementById('calPrev').addEventListener('click', () => { calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; } renderCalendar(); });
-document.getElementById('calNext').addEventListener('click', () => { calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; } renderCalendar(); });
-
-// ── Progress ──
-let chartInstance = null, currentExerciseId = null;
-function getAllExercises() { return [...PROGRAM.upper.exercises, ...PROGRAM.lower.exercises]; }
-function renderProgress() {
-  const exercises = getAllExercises(), tabs = document.getElementById('progressTabs');
-  tabs.innerHTML = '';
-  if (!currentExerciseId) currentExerciseId = exercises[0].id;
-  exercises.forEach(ex => {
-    const btn = document.createElement('button');
-    btn.className = 'progress-tab' + (ex.id === currentExerciseId ? ' is-active' : '');
-    btn.textContent = ex.name;
-    btn.addEventListener('click', () => { currentExerciseId = ex.id; renderProgress(); });
-    tabs.appendChild(btn);
-  });
-  renderChart(currentExerciseId);
-}
-function renderChart(exId) {
-  const data = loadData(), entries = [];
-  Object.keys(data).sort().forEach(key => {
-    const exData = data[key]?.exercises?.[exId]; if (!exData) return;
-    const doneSets = exData.sets.filter(s => s.done); if (doneSets.length === 0) return;
-    entries.push({ date: key, maxWeight: Math.max(...doneSets.map(s => s.weight)), totalVolume: doneSets.reduce((sum, s) => sum + s.weight * s.reps, 0) });
-  });
-  const exercise = getAllExercises().find(e => e.id === exId);
-  document.getElementById('chartTitle').textContent = exercise?.name || '';
-  const statRow = document.getElementById('statRow');
-  if (entries.length === 0) {
-    statRow.innerHTML = ''; document.getElementById('chartSubtitle').textContent = 'まだ記録がありません';
-    if (chartInstance) { chartInstance.destroy(); chartInstance = null; } return;
+  if (result.error) { const message = cloudErrorMessage(result.error); setCloudStatus("error", message); toast(message); return; }
+  cloudUser = result.data.user || result.data.session?.user || null;
+  if (cloudUser) {
+    try {
+      await pushAllRecordsToCloud();
+      await pullCloudRecords();
+      setCloudStatus("online");
+      toast(mode === "signup" ? "登録しました" : "ログインしました");
+    } catch (e) {
+      const message = cloudErrorMessage(e);
+      setCloudStatus("error", message);
+      toast(message);
+    }
+  } else {
+    setCloudStatus("local");
+    toast("確認メールが必要な可能性があります");
   }
-  const latest = entries[entries.length - 1], best = Math.max(...entries.map(e => e.maxWeight));
-  statRow.innerHTML = `<div class="stat-box"><div class="stat-box__value">${latest.maxWeight}kg</div><div class="stat-box__label">最新重量</div></div><div class="stat-box"><div class="stat-box__value">${best}kg</div><div class="stat-box__label">自己ベスト</div></div><div class="stat-box"><div class="stat-box__value">${entries.length}回</div><div class="stat-box__label">記録数</div></div>`;
-  document.getElementById('chartSubtitle').textContent = `最大重量の推移`;
-  const recent = entries.slice(-20), labels = recent.map(e => { const [,m,d] = e.date.split('-'); return `${parseInt(m)}/${parseInt(d)}`; });
-  if (chartInstance) chartInstance.destroy();
-  chartInstance = new Chart(document.getElementById('chartCanvas'), {
-    type: 'line', data: { labels, datasets: [{ data: recent.map(e => e.maxWeight), borderColor: '#f05a28', backgroundColor: 'rgba(240,90,40,.08)', fill: true, tension: 0.4, pointRadius: 5, pointBackgroundColor: '#f05a28', pointBorderColor: '#fff', pointBorderWidth: 2 }] },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-      scales: { x: { ticks: { color: '#adb5bd', font: { size: 10 } }, grid: { color: '#f1f3f5' } }, y: { ticks: { color: '#adb5bd', font: { size: 10 } }, grid: { color: '#f1f3f5' }, beginAtZero: false } } },
+  refreshActiveScreen();
+}
+function totals(record){
+  return record.exercises.reduce((a,e)=>{ a.sets += e.sets; a.reps += e.reps * e.sets; a.volume += e.weight * e.reps * e.sets; return a; }, {sets:0,reps:0,volume:0});
+}
+function todayRecord(){ return loadRecords().find(r => r.date === todayKey()); }
+function activeRecord(){ return loadRecords().find(r => r.date === activeKey()); }
+function switchScreen(name){
+  if (name === "add" && !state.activeDate) state.activeDate = todayKey();
+  if (name !== "add") state.activeDate = null;
+  document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
+  document.getElementById(`${name}Screen`).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.screen === name));
+  const addTitle = state.activeDate && state.activeDate !== todayKey() ? `${dateLabel(state.activeDate)}の記録` : "記録を追加";
+  const titles = { home:"今日の記録", add:addTitle, records:"記録", analytics:"成長の見える化", settings:"設定" };
+  document.getElementById("screenTitle").textContent = titles[name];
+  if (name === "home") renderHome();
+  if (name === "add") renderAdd();
+  if (name === "records") renderRecords();
+  if (name === "analytics") renderAnalytics();
+  if (name === "settings") renderAuthPanel();
+}
+const SET_GOAL = 10;
+function renderHome(){
+  const record = todayRecord();
+  const exercises = record?.exercises || [];
+  const t = record ? totals(record) : {sets:0,reps:0,volume:0};
+  const ratio = Math.min(1, t.sets / SET_GOAL);
+  document.getElementById("ringCount").textContent = `${t.sets}/${SET_GOAL}`;
+  document.getElementById("progressRing").style.setProperty("--ring", `${ratio * 360}deg`);
+  document.getElementById("todayProgress").textContent = `${Math.round(ratio * 100)}%`;
+  document.getElementById("todaySets").textContent = `${t.sets} set`;
+  document.getElementById("todayReps").textContent = `${t.reps} rep`;
+  document.getElementById("todayCalories").textContent = `${Math.round(t.volume / 5)} kcal`;
+  const list = document.getElementById("todayList");
+  if (!record) {
+    list.innerHTML = `<div class="card empty">まだ今日の記録がありません。<br>中央の「追加」から記録できます。</div>`;
+    return;
+  }
+  list.innerHTML = exercises.map((e,i) => workoutCard(e,i,true)).join("");
+}
+function workoutCard(e,i,done=false){
+  const art = ["🏋️","💪","🏃","📈"][i % 4];
+  return `<div class="card workout-card"><div class="check ${done ? "done" : ""}"></div><div class="exercise-art">${art}</div><div><div class="workout-card__name">${escapeHtml(e.name)}</div><div class="metric-row"><div class="mini-metric"><strong>${e.weight}kg</strong><span>重量</span></div><div class="mini-metric"><strong>${e.reps}回</strong><span>回数</span></div><div class="mini-metric"><strong>${e.sets}セット</strong><span>セット</span></div></div></div><div class="chev">›</div></div>`;
+}
+function renderAdd(){
+  document.getElementById("exerciseOptions").innerHTML = EXERCISES.map(e => `<option value="${e}"></option>`).join("");
+  document.getElementById("recentChips").innerHTML = EXERCISES.slice(0,5).map(e => `<button class="chip" type="button" data-name="${e}">${e}</button>`).join("");
+  document.querySelectorAll("[data-name]").forEach(b => b.onclick = () => { document.getElementById("exerciseName").value = b.dataset.name; document.querySelectorAll("[data-name]").forEach(c => c.classList.toggle("active", c === b)); });
+  renderNumberControls();
+}
+function renderNumberControls(){
+  document.getElementById("weightValue").textContent = state.weight.toFixed(1);
+  document.getElementById("repsValue").textContent = state.reps;
+  document.getElementById("weightScale").innerHTML = WEIGHTS.map(w => `<span class="${Math.abs(w-state.weight)<.1 ? "active" : ""}" data-weight="${w}">${w}</span>`).join("");
+  document.getElementById("repsScale").innerHTML = REPS.map(r => `<span class="${r===state.reps ? "active" : ""}" data-reps="${r}">${r}</span>`).join("");
+  document.getElementById("setGrid").innerHTML = [1,2,3,4,5].map(s => `<button class="set-btn ${s===state.sets ? "active" : ""}" type="button" data-sets="${s}">${s}</button>`).join("");
+  document.querySelectorAll("[data-weight]").forEach(el => el.onclick = () => { state.weight = Number(el.dataset.weight); renderNumberControls(); });
+  document.querySelectorAll("[data-reps]").forEach(el => el.onclick = () => { state.reps = Number(el.dataset.reps); renderNumberControls(); });
+  document.querySelectorAll("[data-sets]").forEach(el => el.onclick = () => { state.sets = Number(el.dataset.sets); renderNumberControls(); });
+}
+function saveExercise({stay=false}={}){
+  const input = document.getElementById("exerciseName");
+  const name = input.value.trim() || "ダンベルカール";
+  const records = loadRecords();
+  const date = activeKey();
+  let record = records.find(r => r.date === date);
+  if (!record) { record = { id:crypto.randomUUID(), date, memo:"", exercises:[] }; records.push(record); }
+  record.exercises.push({ name, weight:state.weight, reps:state.reps, sets:state.sets });
+  record.memo = document.getElementById("memoInput").value.trim();
+  touchRecord(record);
+  saveRecords(records);
+  input.value = ""; document.getElementById("memoInput").value = "";
+  toast(date === todayKey() ? "保存しました" : `${dateLabel(date)}に保存しました`);
+  if (!stay) { state.activeDate = null; switchScreen("home"); }
+}
+function renderRecords(){
+  renderCalendar();
+  const records = loadRecords().sort((a,b)=>b.date.localeCompare(a.date));
+  const total = records.reduce((a,r)=>{ const t=totals(r); a.ex += r.exercises.length; a.sets += t.sets; return a; }, {ex:0,sets:0});
+  document.getElementById("recordDays").textContent = `${records.length}日`;
+  document.getElementById("recordExercises").textContent = `${total.ex}種目`;
+  document.getElementById("recordSets").textContent = `${total.sets}セット`;
+  const list = document.getElementById("recordList");
+  if (!records.length) { list.innerHTML = `<div class="card empty">まだ記録がありません。</div>`; return; }
+  list.innerHTML = records.map(r => {
+    const t = totals(r);
+    return `<div class="card record-card"><div class="record-head"><strong>${dateLabel(r.date)}　${dayType(r)}</strong><span>⌄</span></div><div class="record-detail">合計 ${r.exercises.length}種目　${t.sets}セット　${t.reps}レップ</div><div class="record-table">${r.exercises.map(e => `<div class="record-row"><span>${escapeHtml(e.name)}</span><span>${e.weight}kg × ${e.reps}回 × ${e.sets}セット</span></div>`).join("")}</div></div>`;
+  }).join("");
+}
+function renderCalendar(){
+  const d = state.month;
+  const year = d.getFullYear(), month = d.getMonth();
+  document.getElementById("monthLabel").textContent = `${year}年${month+1}月`;
+  const records = new Set(loadRecords().map(r => r.date));
+  const first = new Date(year, month, 1).getDay();
+  const days = new Date(year, month+1, 0).getDate();
+  const today = todayKey();
+  const todayDate = new Date(today + "T12:00:00");
+  let html = DOW.map(x => `<div class="dow">${x}</div>`).join("");
+  for (let i=0;i<first;i++) html += `<div></div>`;
+  for (let day=1;day<=days;day++){
+    const cellDate = new Date(year, month, day);
+    const key = keyOf(cellDate);
+    const future = cellDate > todayDate;
+    html += `<div class="day ${key===today ? "active" : ""} ${records.has(key) ? "has" : ""}" ${future ? "" : `data-date="${key}"`}>${day}</div>`;
+  }
+  const grid = document.getElementById("calendarGrid");
+  grid.innerHTML = html;
+  grid.querySelectorAll("[data-date]").forEach(el => el.onclick = () => {
+    state.activeDate = el.dataset.date;
+    switchScreen("add");
   });
 }
+function renderAnalytics(){
+  const records = loadRecords().sort((a,b)=>a.date.localeCompare(b.date));
+  const points = records.map(r => {
+    const flat = r.exercises;
+    const maxWeight = flat.length ? Math.max(...flat.map(e => e.weight)) : 0;
+    const curl = curlMetrics(r);
+    return { label:dateLabel(r.date).split("(")[0], maxWeight, curlScore: curl.score, curlReps: curl.reps };
+  }).slice(-7);
+  const labels = points.map(p => p.label);
+  const weights = points.map(p => p.maxWeight);
+  const curlScores = points.map(p => p.curlScore);
+  const bestW = weights.length ? Math.max(...weights) : 0;
+  const bestScore = curlScores.length ? Math.max(...curlScores) : 0;
+  document.getElementById("bestWeight").textContent = `${bestW}kg`;
+  document.getElementById("bestCurlScore").textContent = `${Math.round(bestScore)}pt`;
+  document.getElementById("weightChartTitle").textContent = mostRecentExercise() || "ダンベルカール";
+  document.getElementById("monthGrowth").textContent = weights.length >= 2 && weights[0] ? `+${Math.round((weights.at(-1)-weights[0])/weights[0]*100)}%` : "+0%";
+  document.getElementById("prCount").textContent = `${countPr(records)}回`;
+  drawChart("weightChart","line",labels,weights,varColor("--blue"),"rgba(31,122,236,.08)");
+  drawChart("curlScoreChart","bar",labels,curlScores,varColor("--green"),"rgba(34,199,165,.75)");
+}
+function drawChart(id,type,labels,data,border,background){
+  if (state.charts[id]) state.charts[id].destroy();
+  const ctx = document.getElementById(id);
+  state.charts[id] = new Chart(ctx,{type,data:{labels,datasets:[{data,borderColor:border,backgroundColor:background,fill:type==="line",tension:.38,borderWidth:3,pointRadius:type==="line"?4:0,pointBackgroundColor:border,borderRadius:5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{color:"#8a94a6",font:{size:11,weight:"700"}}},y:{grid:{color:"#eef2f7"},ticks:{color:"#8a94a6",font:{size:11,weight:"700"}},beginAtZero:false}}}});
+}
+function dayType(r){ return r.exercises.some(e => /スクワット|デッド|脚/.test(e.name)) ? "脚の日" : r.exercises.some(e => /ロウ|背中/.test(e.name)) ? "背中の日" : "胸・腕の日"; }
+function curlMetrics(record){
+  return record.exercises.filter(e => /カール|curl/i.test(e.name)).reduce((acc,e) => {
+    const reps = e.reps * e.sets;
+    acc.reps += reps;
+    acc.score += e.weight * reps;
+    return acc;
+  }, { reps:0, score:0 });
+}
+function mostRecentExercise(){ const r = loadRecords().sort((a,b)=>b.date.localeCompare(a.date))[0]; return r?.exercises?.[0]?.name; }
+function countPr(records){ let best=0,count=0; records.forEach(r => r.exercises.forEach(e => { if(e.weight>best){ if(best>0) count++; best=e.weight; } })); return count; }
+function varColor(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function escapeHtml(v){ return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function toast(msg){ const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1800); }
 
-renderWorkout();
-if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+document.querySelectorAll(".nav-btn").forEach(btn => btn.onclick = () => switchScreen(btn.dataset.screen));
+document.querySelectorAll("[data-step-weight]").forEach(b => b.onclick = () => { state.weight = Math.max(0, +(state.weight + Number(b.dataset.stepWeight) * .5).toFixed(1)); renderNumberControls(); });
+document.querySelectorAll("[data-step-reps]").forEach(b => b.onclick = () => { state.reps = Math.max(1, state.reps + Number(b.dataset.stepReps)); renderNumberControls(); });
+document.getElementById("saveRecord").onclick = () => saveExercise();
+document.getElementById("addAnother").onclick = () => saveExercise({stay:true});
+document.getElementById("prevMonth").onclick = () => { state.month.setMonth(state.month.getMonth()-1); renderRecords(); };
+document.getElementById("nextMonth").onclick = () => { state.month.setMonth(state.month.getMonth()+1); renderRecords(); };
+document.getElementById("topAction").onclick = () => switchScreen("settings");
+
+switchScreen("home");
+initCloud();
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script>
 </body>
 </html>
