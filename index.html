@@ -52,10 +52,10 @@ input,textarea{border:0;background:none;color:inherit}
 .field{display:flex;flex-direction:column;gap:8px}.label{font-size:13px;font-weight:900}.input{height:42px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:0 12px;font-size:14px;font-weight:700;box-shadow:inset 0 1px 2px rgba(15,35,70,.03)}textarea.input{height:58px;resize:none;padding-top:11px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}.chip{background:#eef2f7;border-radius:9px;padding:8px 12px;font-size:12px;font-weight:800;color:#344054}.chip.active{background:var(--blue);color:#fff}
 .number-control{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px}.round-btn{width:42px;height:42px;border:1px solid #cfd8e3;border-radius:50%;display:grid;place-items:center;font-size:27px;color:#111827;background:#fff}.big-number{text-align:center;font-size:42px;font-weight:900;color:var(--blue);line-height:1.1}
-.scale{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;background:#fff}.scale span{height:24px;display:grid;place-items:center;border-radius:5px;font-size:11px;color:var(--muted);font-weight:800}.scale span.active{background:var(--blue);color:#fff}
+.scale{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px;border:1px solid var(--line);border-radius:8px;padding:4px;background:#fff}.scale span{height:26px;display:grid;place-items:center;border-radius:5px;font-size:11px;color:var(--muted);font-weight:800;cursor:pointer}.scale span.active{background:var(--blue);color:#fff}
 .set-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.set-btn{height:34px;border:1px solid var(--line);background:#fff;border-radius:8px;font-size:13px;font-weight:800}.set-btn.active{background:var(--blue);border-color:var(--blue);color:#fff}
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:2px}.outline-btn,.primary-btn{height:42px;border-radius:9px;font-size:14px;font-weight:900}.outline-btn{border:1.5px solid var(--blue);color:var(--blue);background:#fff}.primary-btn{background:linear-gradient(180deg,#2c8cff,#0f6fe8);color:#fff;box-shadow:0 10px 20px rgba(31,122,236,.24)}
-.calendar-card{padding:14px}.month-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.month-row strong{font-size:15px}.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:7px}.dow{font-size:11px;font-weight:800;color:var(--muted)}.day{height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;position:relative;user-select:none}.day[data-date]{cursor:pointer}.day[data-date]:active{background:var(--blue-soft)}.day.active{background:var(--blue);color:#fff}.day.active[data-date]:active{background:var(--blue-dark)}.day.has::after{content:"";position:absolute;bottom:1px;width:4px;height:4px;background:var(--blue);border-radius:50%}.day.active::after{background:#fff}
+.calendar-card{padding:14px}.month-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.month-row strong{font-size:15px}.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:7px;justify-items:center}.dow{font-size:11px;font-weight:800;color:var(--muted)}.day{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;position:relative;user-select:none}.day[data-date]{cursor:pointer}.day[data-date]:active{background:var(--blue-soft)}.day.active{background:var(--blue);color:#fff}.day.active[data-date]:active{background:var(--blue-dark)}.day.has::after{content:"";position:absolute;bottom:1px;width:4px;height:4px;background:var(--blue);border-radius:50%}.day.active::after{background:#fff}
 .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);padding:12px 0}.stats-strip div{text-align:center;border-right:1px solid #e5eaf1}.stats-strip div:last-child{border-right:0}.stats-strip strong{display:block;font-size:18px}.stats-strip span{font-size:11px;color:var(--muted);font-weight:800}
 .record-list{display:flex;flex-direction:column;gap:10px}.record-card{padding:14px}.record-head{display:flex;justify-content:space-between;align-items:center}.record-head strong{font-size:14px}.record-head span{font-size:12px;color:var(--muted);font-weight:800}.record-detail{font-size:12px;color:var(--muted);font-weight:800;margin:7px 0 12px}.record-table{display:flex;flex-direction:column;gap:8px}.record-row{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:12px;font-weight:800}.record-row span:last-child{color:#111827}
 .range-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.range-tabs button{height:32px;border-radius:9px;font-size:12px;font-weight:800}.range-tabs button.active{background:var(--blue);color:#fff}.chart-card{padding:16px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}.chart-title{font-size:15px;font-weight:900}.chart-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:3px}.best-badge{border:1px solid #8ec0ff;border-radius:8px;padding:6px 10px;text-align:center;color:var(--blue);font-weight:900;font-size:13px}.best-badge span{display:block;font-size:11px}.chart-wrap{height:210px}.chart-wrap canvas{width:100%!important;height:100%!important}.summary-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-card{padding:14px}.mini-card span{font-size:12px;color:var(--muted);font-weight:800}.mini-card strong{display:block;margin-top:8px;font-size:25px;color:#16a34a}.mini-card strong.orange{color:var(--orange)}
@@ -63,10 +63,20 @@ input,textarea{border:0;background:none;color:inherit}
 .auth-panel{display:flex;flex-direction:column;gap:10px}.auth-row{display:flex;gap:8px}.auth-row .primary-btn,.auth-row .outline-btn{flex:1}.sync-state{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:var(--blue-soft);color:var(--blue);padding:6px 10px;font-size:12px;font-weight:900}.sync-state.local{background:#eef2f7;color:#64748b}.sync-state.error{background:#fef2f2;color:#ef4444}
 .tabbar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);border-top:1px solid rgba(17,24,39,.06);box-shadow:0 -12px 32px rgba(15,35,70,.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:6px 0 calc(6px + var(--safe-b));z-index:50}.tabbar__inner{max-width:390px;height:64px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding:0 8px}.nav-btn{width:100%;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding-top:10px;font-size:10px;font-weight:800;color:#111827}.nav-btn.active{color:var(--blue)}.nav-btn svg{display:block;flex:0 0 auto}.nav-btn--add{position:relative;top:-16px;color:var(--blue);height:78px;padding-top:0;justify-content:flex-start;gap:3px}.nav-btn--add .plus{width:52px;height:52px;min-width:52px;min-height:52px;aspect-ratio:1/1;flex:0 0 52px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2c8cff,#0f6fe8);box-shadow:0 10px 24px rgba(31,122,236,.35),0 0 0 7px rgba(255,255,255,.96);color:#fff;font-size:33px;font-weight:400;line-height:1;text-align:center;padding:0 0 3px}.nav-btn--add span:last-child{display:block;margin-top:0}
 .toast{position:fixed;left:50%;top:52px;transform:translateX(-50%) translateY(-16px);background:#111827;color:#fff;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800;opacity:0;pointer-events:none;transition:.25s;z-index:90}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.workout-card[data-edit]{cursor:pointer}.workout-card[data-edit]:active{background:#f4f7fb}
+.sheet-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.45);opacity:0;pointer-events:none;transition:.2s;z-index:80}.sheet-backdrop.open{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:0;right:0;bottom:0;max-width:390px;margin:0 auto;background:#fff;border-radius:18px 18px 0 0;padding:20px 18px calc(18px + var(--safe-b));box-shadow:0 -18px 44px rgba(15,35,70,.18);transform:translateY(100%);transition:.25s;z-index:81}.sheet.open{transform:translateY(0)}
+.sheet__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sheet__title{font-size:16px;font-weight:900}.sheet__close{font-size:22px;color:#111827;background:none;border:0;line-height:1}
+.sheet__row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.sheet__field{display:flex;flex-direction:column;gap:6px;min-width:0}.sheet__field label{font-size:12px;font-weight:800;color:var(--muted)}.sheet__field input{width:100%;min-width:0;height:40px;border:1px solid var(--line);background:#fff;border-radius:9px;padding:0 12px;font-size:14px;font-weight:700}
+.sheet__actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.danger-btn{height:42px;border:1.5px solid #fca5a5;color:#ef4444;background:#fff;border-radius:9px;font-size:14px;font-weight:900}
+.date-field{margin-top:-2px}.date-field .muted-label{font-size:12px;color:var(--muted);font-weight:800}.date-field .input{height:36px;font-size:13px;color:#374151}.date-hint{font-size:11px;color:var(--muted);font-weight:700;margin-top:-2px}.date-hint.past{color:var(--blue);font-weight:900}
+.exercise-info{display:none;margin-top:6px;padding:10px 12px;border-radius:10px;background:var(--blue-soft);font-size:12px;font-weight:700;color:#1e3a8a;line-height:1.5}.exercise-info.show{display:flex;flex-direction:column;gap:6px}.exercise-info .target{display:flex;gap:6px;align-items:center}.exercise-info .help-link{align-self:flex-start;color:var(--blue);font-weight:900;font-size:12px;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer}
+.sheet--scroll{max-height:80vh;overflow-y:auto}.help-body{font-size:13px;line-height:1.7;color:#1f2937}.help-body h3{font-size:13px;font-weight:900;color:var(--blue);margin:14px 0 4px}.help-body h3:first-child{margin-top:0}.help-body p{margin:0 0 8px}.help-body ul{margin:0 0 8px;padding-left:18px}.help-body li{margin-bottom:3px}.help-body strong{color:#0f172a;font-weight:900}
 </style>
 </head>
 <body>
-<div class="status"><span>9:41</span><div class="status__icons"><div class="signal"><span></span><span></span><span></span><span></span></div><div class="wifi"></div><div class="battery"></div></div></div>
 <header class="top">
   <div><h1 class="top__title" id="screenTitle">今日の記録</h1></div>
   <button class="icon-btn" id="topAction" type="button" aria-label="設定"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
@@ -90,11 +100,12 @@ input,textarea{border:0;background:none;color:inherit}
   <section class="screen" id="addScreen">
     <div class="form">
       <div class="field"><label class="label" for="exerciseName">種目名</label><input class="input" id="exerciseName" list="exerciseOptions" placeholder="種目名を入力・選択"><datalist id="exerciseOptions"></datalist></div>
-      <div class="field"><div class="label">最近使った種目</div><div class="chips" id="recentChips"></div></div>
+      <div class="field"><div class="label">メニュー</div><div class="chips" id="recentChips"></div><div class="exercise-info" id="exerciseInfo"></div></div>
       <div class="field"><div class="label">重量 (kg)</div><div class="number-control"><button class="round-btn" data-step-weight="-1" type="button">−</button><div class="big-number" id="weightValue">12.0</div><button class="round-btn" data-step-weight="1" type="button">＋</button></div><div class="scale" id="weightScale"></div></div>
       <div class="field"><div class="label">回数 (回)</div><div class="number-control"><button class="round-btn" data-step-reps="-1" type="button">−</button><div class="big-number" id="repsValue">10</div><button class="round-btn" data-step-reps="1" type="button">＋</button></div><div class="scale" id="repsScale"></div></div>
       <div class="field"><div class="label">セット数</div><div class="set-grid" id="setGrid"></div></div>
       <div class="field"><label class="label" for="memoInput">メモ（任意）</label><textarea class="input" id="memoInput" placeholder="フォームや感想などをメモできます"></textarea></div>
+      <div class="field date-field"><label class="label muted-label" for="addDate">追加日付</label><input class="input" id="addDate" type="date"><div class="date-hint" id="addDateHint">当日</div></div>
       <div class="actions"><button class="outline-btn" id="addAnother" type="button">＋ 種目を追加</button><button class="primary-btn" id="saveRecord" type="button">保存する</button></div>
     </div>
   </section>
@@ -125,6 +136,24 @@ input,textarea{border:0;background:none;color:inherit}
   <button class="nav-btn" data-screen="settings" type="button"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2 3.4-.2-.1a1.7 1.7 0 0 0-2 .2 1.7 1.7 0 0 0-.8 1.7V22H9.2v-.2a1.7 1.7 0 0 0-.8-1.7 1.7 1.7 0 0 0-2-.2l-.2.1-2-3.4.1-.1A1.7 1.7 0 0 0 4.6 15 1.7 1.7 0 0 0 3 14H2v-4h1a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 2-3.4.2.1a1.7 1.7 0 0 0 2-.2 1.7 1.7 0 0 0 .8-1.7V2h5.6v.2a1.7 1.7 0 0 0 .8 1.7 1.7 1.7 0 0 0 2 .2l.2-.1 2 3.4-.1.1a1.7 1.7 0 0 0-.3 1.9A1.7 1.7 0 0 0 21 10h1v4h-1a1.7 1.7 0 0 0-1.6 1z"></path></svg><span>設定</span></button>
 </div></nav>
 <div class="toast" id="toast"></div>
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet sheet--scroll" id="helpSheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="sheet__head"><div class="sheet__title" id="helpSheetTitle">種目の解説</div><button class="sheet__close" id="helpSheetClose" type="button" aria-label="閉じる">×</button></div>
+  <div class="help-body" id="helpSheetBody"></div>
+</div>
+<div class="sheet" id="editSheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="sheet__head"><div class="sheet__title">記録を編集</div><button class="sheet__close" id="sheetClose" type="button" aria-label="閉じる">×</button></div>
+  <div class="sheet__field"><label for="editName">種目名</label><input class="input" id="editName" type="text"></div>
+  <div class="sheet__row">
+    <div class="sheet__field"><label for="editWeight">重量 (kg)</label><input class="input" id="editWeight" type="text" inputmode="decimal" pattern="[0-9.]*" autocomplete="off"></div>
+    <div class="sheet__field"><label for="editReps">回数</label><input class="input" id="editReps" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>
+  </div>
+  <div class="sheet__row">
+    <div class="sheet__field"><label for="editSets">セット数</label><input class="input" id="editSets" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>
+    <div></div>
+  </div>
+  <div class="sheet__actions"><button class="danger-btn" id="editDelete" type="button">削除</button><button class="primary-btn" id="editSave" type="button">保存</button></div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -132,8 +161,81 @@ const STORAGE_KEY = "muscle_log_v2";
 const LEGACY_KEY = "muscle_log";
 const SUPABASE_URL = "https://vqpidjrpfsyaohqddcri.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxcGlkanJwZnN5YW9ocWRkY3JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0MDMxMDAsImV4cCI6MjA5MDk3OTEwMH0.iLKTGiqe39AKOqY36Excbvfvoqu04_zHYSOh6kFm_mA";
-const EXERCISES = ["ダンベルカール","ショルダープレス","ベンチプレス","ダンベルフライ","スクワット","ダンベルベンチプレス","ルーマニアンデッドリフト"];
-const WEIGHTS = [2.5,5,7.5,10,12.5,15,17.5,20];
+// Default menu — restored from initial commit (bfb14c2). Each entry has target, defaults, and a help body.
+const EXERCISE_LIBRARY = [
+  { id:"bench_press", name:"ダンベルベンチプレス", target:"胸・肩の前・二の腕の裏", group:"上半身", defaultWeight:6.5, defaultReps:10, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>ベンチに仰向けに寝て、両手のダンベルを胸の上で押し上げる動きです。胸の筋肉をメインで鍛えます。</p>
+<h3>鍛えられる部位</h3><p><strong>大胸筋</strong>（胸の大きな筋肉）がメイン。肩の前側と二の腕の裏側も同時に使います。</p>
+<h3>正しいやり方</h3>
+<ul><li>ベンチに仰向けになり、足裏を床にしっかりつける</li><li><strong>肩甲骨を寄せて胸を張る</strong>（背中に拳1個分のアーチを作るイメージ）</li><li>ダンベルを胸の横まで下ろす（肘の角度は約90度）</li><li>息を吐きながら、まっすぐ上に押し上げる</li><li><strong>下ろすときは2〜3秒かけてゆっくり</strong>（ここが一番効く）</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>肩甲骨が寄っていない → 胸ではなく肩に負荷がかかり、肩を痛めやすい</li><li>下ろしが浅い → 胸の筋肉がしっかり伸びないので効果が半減</li><li>腰を反りすぎる → 腰痛の原因になる</li></ul>
+<h3>目安</h3><p>3セット × 8〜12回。「あと2回がキツい」くらいの重量がちょうどいい。</p>` },
+  { id:"one_arm_row", name:"ワンハンドロウ", target:"背中・力こぶ", group:"上半身", defaultWeight:6.5, defaultReps:10, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>ベンチに片手と片膝をついて、もう片方の手でダンベルを引き上げる動きです。背中の大きな筋肉を鍛えます。</p>
+<h3>鍛えられる部位</h3><p><strong>広背筋</strong>（背中の広い筋肉）と<strong>僧帽筋</strong>（背中の上部）がメイン。力こぶの筋肉も補助的に使います。</p>
+<h3>正しいやり方</h3>
+<ul><li>ベンチに右手と右膝をつき、左手でダンベルを持つ</li><li>背中をまっすぐ（テーブルのように平ら）にする</li><li><strong>肘を天井に引き上げるイメージ</strong>でダンベルを持ち上げる</li><li>脇腹あたりまで引いたら1秒キープ</li><li>ゆっくり下ろす</li><li>片側が終わったら反対側も同じ回数</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>腕の力だけで持ち上げる → 背中に効かない。「肘を引く」意識が大事</li><li>体が回転する → 胴体は固定。動くのは腕だけ</li><li>背中が丸まる → 腰を痛める原因</li></ul>
+<h3>なぜ必要？</h3><p>胸のプレスだけだと前側の筋肉ばかり発達して、猫背の原因になります。背中も鍛えることで姿勢が良くなります。</p>
+<h3>目安</h3><p>左右それぞれ3セット × 8〜12回。</p>` },
+  { id:"shoulder_press", name:"ショルダープレス", target:"肩全体・二の腕の裏", group:"上半身", defaultWeight:4.5, defaultReps:10, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>座った状態で、ダンベルを耳の横から頭上に押し上げる動きです。</p>
+<h3>鍛えられる部位</h3><p><strong>三角筋</strong>（肩を覆う筋肉）全体がメイン。二の腕の裏側も補助的に使います。</p>
+<h3>正しいやり方</h3>
+<ul><li>ベンチに座る（背もたれがあれば寄りかかってOK）</li><li>ダンベルを耳の横に構える（肘は90度くらい）</li><li>息を吐きながら、まっすぐ上に押し上げる</li><li>腕を伸ばしきる直前で止めて、ゆっくり下ろす</li><li><strong>ダンベル同士をぶつけない</strong>（上で少し離す）</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>腰を反って押し上げる → 肩ではなく胸に効いてしまう＋腰を痛める</li><li>重すぎる重量 → 肩は怪我しやすい関節。軽めから始める</li><li>下ろしが浅い → 可動域が狭いと効果が薄い</li></ul>
+<h3>なぜ必要？</h3><p>肩の筋肉は見た目の印象に大きく影響します。鍛えると肩幅が広がり、逆三角形の体型に近づきます。</p>
+<h3>目安</h3><p>3セット × 8〜12回。胸のプレスより軽い重量でOK。</p>` },
+  { id:"arm_curl", name:"アームカール", target:"力こぶ（上腕二頭筋）", group:"上半身", defaultWeight:4.5, defaultReps:12, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>立った状態でダンベルを持ち、肘を固定して前腕を巻き上げる動きです。力こぶを鍛えます。</p>
+<h3>鍛えられる部位</h3><p><strong>上腕二頭筋</strong>（力こぶ）がメインです。</p>
+<h3>正しいやり方</h3>
+<ul><li>足を肩幅に開いて立つ</li><li><strong>肘を体の横に固定する</strong>（肘を動かさないのが最重要）</li><li>手のひらを上に向けて、ゆっくり巻き上げる</li><li>上まで来たら1秒キープ</li><li>ゆっくり下ろす（反動を使わない）</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>体を振って反動で上げる → 力こぶに効かない。体は直立のまま</li><li>肘が前後に動く → 肘を脇腹に固定する意識</li><li>手首が曲がる → 手首を痛める。手首はまっすぐ</li></ul>
+<h3>目安</h3><p>3セット × 10〜15回。反動なしで丁寧にできる重量を選ぶ。</p>` },
+  { id:"tricep_kickback", name:"トライセプスキックバック", target:"二の腕の裏（上腕三頭筋）", group:"上半身", defaultWeight:2.5, defaultReps:12, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>ベンチに片手をついて前傾姿勢になり、ダンベルを持った腕を後ろに伸ばす動きです。二の腕の裏を鍛えます。</p>
+<h3>鍛えられる部位</h3><p><strong>上腕三頭筋</strong>（二の腕の裏側）。腕を伸ばす動きで使う筋肉です。</p>
+<h3>正しいやり方</h3>
+<ul><li>ベンチに片手と片膝をつく（背中の引き上げと同じ姿勢）</li><li>上体を床と平行にする</li><li>肘を90度に曲げた状態からスタート</li><li><strong>肘の位置を固定したまま</strong>、腕を後ろにまっすぐ伸ばす</li><li>伸ばしきったところで1秒キープ</li><li>ゆっくり戻す。片側が終わったら反対も</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>肘が下がる → 三頭筋に効かない。肘は体と同じ高さをキープ</li><li>上体が起きている → 前傾が足りないと負荷が減る</li><li>反動で振る → 怪我の原因。ゆっくり丁寧に</li></ul>
+<h3>目安</h3><p>左右それぞれ3セット × 10〜15回。</p>` },
+  { id:"squat", name:"スクワット", target:"太もも前・お尻", group:"下半身", defaultWeight:6.5, defaultReps:15, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>両手にダンベルを持って、しゃがんで立ち上がる動きです。下半身の王道トレーニング。</p>
+<h3>鍛えられる部位</h3><p><strong>大腿四頭筋</strong>（太もも前面）と<strong>大殿筋</strong>（お尻）がメイン。太もも裏も補助的に使います。</p>
+<h3>正しいやり方</h3>
+<ul><li>ダンベルを両手に持ち、体の横に下げる</li><li>足を肩幅に開き、つま先をやや外側に向ける</li><li><strong>お尻を後ろに引くように</strong>腰を落とす（椅子に座るイメージ）</li><li>太ももが床と平行になるまで下げる</li><li>かかとで地面を押すように立ち上がる</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>膝が内側に入る → 膝を痛める。つま先と同じ方向に</li><li>背中が丸まる → 腰痛の原因。胸を張って背筋を伸ばす</li><li>浅すぎる → 太ももが平行になるまで下げないと効果が薄い</li></ul>
+<h3>目安</h3><p>3セット × 12〜15回。</p>` },
+  { id:"romanian_deadlift", name:"ルーマニアンデッドリフト", target:"太もも裏・お尻・腰", group:"下半身", defaultWeight:6.5, defaultReps:12, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>ダンベルを持って、膝を軽く曲げたまま上体を前に倒す動きです。太ももの裏側を強くストレッチしながら鍛えます。</p>
+<h3>鍛えられる部位</h3><p><strong>ハムストリングス</strong>（太もも裏）と<strong>大殿筋</strong>（お尻）がメイン。脊柱起立筋（腰〜背中の姿勢を保つ筋肉）も使います。</p>
+<h3>正しいやり方</h3>
+<ul><li>ダンベルを両手に持ち、太ももの前に構える</li><li>足は腰幅、膝はやや曲げた状態で固定</li><li><strong>お尻を後ろに突き出すように</strong>上体を前に倒す</li><li>ダンベルを太ももに沿わせるようにスネの位置まで下ろす</li><li>太もも裏に「ピーン」と張りを感じたら止めて、お尻を締めながら起き上がる</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>背中が丸まる → 腰を痛める。<strong>背中はずっとまっすぐ</strong></li><li>膝を曲げすぎる → スクワットになってしまう。膝の角度は最初から固定</li><li>ダンベルが体から離れる → 太ももに沿わせて下ろす</li></ul>
+<h3>なぜ必要？</h3><p>スクワットだけだと太ももの前側ばかり鍛わります。裏側も鍛えることで膝の怪我予防とお尻の引き締めに効果大。</p>
+<h3>目安</h3><p>3セット × 10〜12回。太もも裏の張りを感じながらゆっくり。</p>` },
+  { id:"abs", name:"クランチ", target:"お腹（腹直筋）", group:"体幹", defaultWeight:0, defaultReps:20, defaultSets:3,
+    help:`<h3>どんな動き？</h3><p>仰向けに寝て、上体を少しだけ起こす動きです。完全に起き上がる必要はありません。</p>
+<h3>鍛えられる部位</h3><p><strong>腹直筋</strong>（お腹の正面の筋肉＝いわゆる「シックスパック」）です。</p>
+<h3>正しいやり方</h3>
+<ul><li>仰向けに寝て膝を90度に曲げる（足裏は床につける）</li><li>手は胸の前で交差するか、耳の横に軽く添える</li><li><strong>おへそを覗き込むように</strong>肩甲骨が浮くまで上体を起こす</li><li>完全に起き上がる必要はない（30度くらいでOK）</li><li>下ろすときもゆっくり（背中をベタッと床につけない）</li></ul>
+<h3>ありがちな失敗</h3>
+<ul><li>首の後ろで手を組む → 首を引っ張って痛める原因</li><li>反動で勢いよく起き上がる → 腹筋に効いていない</li><li>速すぎる → ゆっくりやるほど効く</li></ul>
+<h3>レベルアップ</h3><p>慣れてきたらダンベルを胸に抱えて負荷を追加できます。</p>
+<h3>目安</h3><p>3セット × 15〜20回。</p>` },
+];
+const EXERCISES = EXERCISE_LIBRARY.map(e => e.name);
+function findExerciseInfo(name){ return EXERCISE_LIBRARY.find(e => e.name === name); }
+// Dumbbell ladder (per-hand kg) — see memory user_fitness_profile.md
+const WEIGHTS = [2.5,3.5,4.5,5.5,6.5,8,9,10,11.5,13.5,16,18,20.5,22.5,24];
 const REPS = [6,8,10,12,15,20,25];
 const DOW = ["日","月","火","水","木","金","土"];
 let state = { weight: 12, reps: 10, sets: 3, month: new Date(), activeDate: null, charts: {} };
@@ -413,17 +515,81 @@ function renderHome(){
     list.innerHTML = `<div class="card empty">まだ今日の記録がありません。<br>中央の「追加」から記録できます。</div>`;
     return;
   }
-  list.innerHTML = exercises.map((e,i) => workoutCard(e,i,true)).join("");
+  list.innerHTML = exercises.map((e,i) => workoutCard(e,i,true,record.date)).join("");
+  bindWorkoutCardEdit(list);
 }
-function workoutCard(e,i,done=false){
+function workoutCard(e,i,done=false,date){
   const art = ["🏋️","💪","🏃","📈"][i % 4];
-  return `<div class="card workout-card"><div class="check ${done ? "done" : ""}"></div><div class="exercise-art">${art}</div><div><div class="workout-card__name">${escapeHtml(e.name)}</div><div class="metric-row"><div class="mini-metric"><strong>${e.weight}kg</strong><span>重量</span></div><div class="mini-metric"><strong>${e.reps}回</strong><span>回数</span></div><div class="mini-metric"><strong>${e.sets}セット</strong><span>セット</span></div></div></div><div class="chev">›</div></div>`;
+  const editAttr = date ? ` data-edit data-edit-date="${date}" data-edit-idx="${i}"` : "";
+  return `<div class="card workout-card"${editAttr}><div class="check ${done ? "done" : ""}"></div><div class="exercise-art">${art}</div><div><div class="workout-card__name">${escapeHtml(e.name)}</div><div class="metric-row"><div class="mini-metric"><strong>${e.weight}kg</strong><span>重量</span></div><div class="mini-metric"><strong>${e.reps}回</strong><span>回数</span></div><div class="mini-metric"><strong>${e.sets}セット</strong><span>セット</span></div></div></div><div class="chev">›</div></div>`;
 }
 function renderAdd(){
-  document.getElementById("exerciseOptions").innerHTML = EXERCISES.map(e => `<option value="${e}"></option>`).join("");
-  document.getElementById("recentChips").innerHTML = EXERCISES.slice(0,5).map(e => `<button class="chip" type="button" data-name="${e}">${e}</button>`).join("");
-  document.querySelectorAll("[data-name]").forEach(b => b.onclick = () => { document.getElementById("exerciseName").value = b.dataset.name; document.querySelectorAll("[data-name]").forEach(c => c.classList.toggle("active", c === b)); });
+  document.getElementById("exerciseOptions").innerHTML = EXERCISE_LIBRARY.map(e => `<option value="${e.name}">${e.target}</option>`).join("");
+  document.getElementById("recentChips").innerHTML = EXERCISE_LIBRARY.map(e => `<button class="chip" type="button" data-name="${escapeHtml(e.name)}">${escapeHtml(e.name)}</button>`).join("");
+  document.querySelectorAll("#recentChips [data-name]").forEach(b => b.onclick = () => selectExercise(b.dataset.name));
+  document.getElementById("exerciseName").oninput = (ev) => {
+    const name = ev.target.value.trim();
+    document.querySelectorAll("#recentChips [data-name]").forEach(c => c.classList.toggle("active", c.dataset.name === name));
+    refreshExerciseInfo(name);
+  };
+  refreshExerciseInfo(document.getElementById("exerciseName").value.trim());
   renderNumberControls();
+  renderAddDate();
+}
+function selectExercise(name){
+  const info = findExerciseInfo(name);
+  document.getElementById("exerciseName").value = name;
+  document.querySelectorAll("#recentChips [data-name]").forEach(c => c.classList.toggle("active", c.dataset.name === name));
+  if (info) {
+    state.weight = info.defaultWeight;
+    state.reps = info.defaultReps;
+    state.sets = info.defaultSets;
+    renderNumberControls();
+  }
+  refreshExerciseInfo(name);
+}
+function refreshExerciseInfo(name){
+  const box = document.getElementById("exerciseInfo");
+  if (!box) return;
+  const info = findExerciseInfo(name);
+  if (!info) { box.classList.remove("show"); box.innerHTML = ""; return; }
+  box.classList.add("show");
+  box.innerHTML = `<div class="target">鍛える部位: <strong>${escapeHtml(info.target)}</strong></div><button class="help-link" type="button" data-help-id="${info.id}">📘 やり方・コツを見る</button>`;
+  box.querySelector("[data-help-id]").onclick = () => openExerciseHelp(info);
+}
+function openExerciseHelp(info){
+  document.getElementById("helpSheetTitle").textContent = `${info.name}（${info.target}）`;
+  document.getElementById("helpSheetBody").innerHTML = info.help;
+  document.getElementById("helpSheet").classList.add("open");
+  document.getElementById("sheetBackdrop").classList.add("open");
+  document.getElementById("helpSheet").setAttribute("aria-hidden","false");
+}
+function closeExerciseHelp(){
+  document.getElementById("helpSheet").classList.remove("open");
+  document.getElementById("sheetBackdrop").classList.remove("open");
+  document.getElementById("helpSheet").setAttribute("aria-hidden","true");
+}
+function renderAddDate(){
+  const input = document.getElementById("addDate");
+  if (!input) return;
+  input.max = todayKey();
+  input.value = activeKey();
+  input.onchange = () => {
+    const v = input.value;
+    state.activeDate = (!v || v === todayKey()) ? null : v;
+    renderAddDate();
+    updateAddTitle();
+  };
+  updateAddTitle();
+  const hint = document.getElementById("addDateHint");
+  if (hint) {
+    if (input.value === todayKey()) { hint.textContent = "当日"; hint.classList.remove("past"); }
+    else { hint.textContent = `${dateLabel(input.value)}に保存します`; hint.classList.add("past"); }
+  }
+}
+function updateAddTitle(){
+  const date = activeKey();
+  document.getElementById("screenTitle").textContent = date === todayKey() ? "記録を追加" : `${dateLabel(date)}の記録`;
 }
 function renderNumberControls(){
   document.getElementById("weightValue").textContent = state.weight.toFixed(1);
@@ -529,6 +695,63 @@ function varColor(name){ return getComputedStyle(document.documentElement).getPr
 function escapeHtml(v){ return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function toast(msg){ const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),1800); }
 
+let editingTarget = null;
+function bindWorkoutCardEdit(scope){
+  scope.querySelectorAll("[data-edit]").forEach(card => {
+    card.onclick = () => openExerciseEditor(card.dataset.editDate, Number(card.dataset.editIdx));
+  });
+}
+function openExerciseEditor(date, idx){
+  const record = loadRecords().find(r => r.date === date);
+  const ex = record?.exercises?.[idx];
+  if (!ex) return;
+  editingTarget = { date, idx };
+  document.getElementById("editName").value = ex.name;
+  document.getElementById("editWeight").value = ex.weight;
+  document.getElementById("editReps").value = ex.reps;
+  document.getElementById("editSets").value = ex.sets;
+  document.getElementById("editSheet").classList.add("open");
+  document.getElementById("sheetBackdrop").classList.add("open");
+  document.getElementById("editSheet").setAttribute("aria-hidden", "false");
+}
+function closeExerciseEditor(){
+  editingTarget = null;
+  document.getElementById("editSheet").classList.remove("open");
+  document.getElementById("sheetBackdrop").classList.remove("open");
+  document.getElementById("editSheet").setAttribute("aria-hidden", "true");
+}
+function applyExerciseEdit(){
+  if (!editingTarget) return;
+  const records = loadRecords();
+  const record = records.find(r => r.date === editingTarget.date);
+  const ex = record?.exercises?.[editingTarget.idx];
+  if (!ex) return closeExerciseEditor();
+  const name = document.getElementById("editName").value.trim() || ex.name;
+  const weight = Math.max(0, Number(document.getElementById("editWeight").value) || 0);
+  const reps = Math.max(1, Math.round(Number(document.getElementById("editReps").value) || 1));
+  const sets = Math.max(1, Math.round(Number(document.getElementById("editSets").value) || 1));
+  Object.assign(ex, { name, weight, reps, sets });
+  touchRecord(record);
+  saveRecords(records);
+  closeExerciseEditor();
+  toast("更新しました");
+  refreshActiveScreen();
+}
+function deleteExerciseFromRecord(){
+  if (!editingTarget) return;
+  if (!confirm("この種目を削除しますか？")) return;
+  const records = loadRecords();
+  const recordIdx = records.findIndex(r => r.date === editingTarget.date);
+  if (recordIdx < 0) return closeExerciseEditor();
+  records[recordIdx].exercises.splice(editingTarget.idx, 1);
+  if (!records[recordIdx].exercises.length) records.splice(recordIdx, 1);
+  else touchRecord(records[recordIdx]);
+  saveRecords(records);
+  closeExerciseEditor();
+  toast("削除しました");
+  refreshActiveScreen();
+}
+
 document.querySelectorAll(".nav-btn").forEach(btn => btn.onclick = () => switchScreen(btn.dataset.screen));
 document.querySelectorAll("[data-step-weight]").forEach(b => b.onclick = () => { state.weight = Math.max(0, +(state.weight + Number(b.dataset.stepWeight) * .5).toFixed(1)); renderNumberControls(); });
 document.querySelectorAll("[data-step-reps]").forEach(b => b.onclick = () => { state.reps = Math.max(1, state.reps + Number(b.dataset.stepReps)); renderNumberControls(); });
@@ -537,6 +760,11 @@ document.getElementById("addAnother").onclick = () => saveExercise({stay:true});
 document.getElementById("prevMonth").onclick = () => { state.month.setMonth(state.month.getMonth()-1); renderRecords(); };
 document.getElementById("nextMonth").onclick = () => { state.month.setMonth(state.month.getMonth()+1); renderRecords(); };
 document.getElementById("topAction").onclick = () => switchScreen("settings");
+document.getElementById("sheetClose").onclick = closeExerciseEditor;
+document.getElementById("helpSheetClose").onclick = closeExerciseHelp;
+document.getElementById("sheetBackdrop").onclick = () => { closeExerciseEditor(); closeExerciseHelp(); };
+document.getElementById("editSave").onclick = applyExerciseEdit;
+document.getElementById("editDelete").onclick = deleteExerciseFromRecord;
 
 switchScreen("home");
 initCloud();

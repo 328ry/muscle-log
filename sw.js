@@ -1,4 +1,4 @@
-const CACHE_NAME = 'muscle-log-v16';
+const CACHE_NAME = 'muscle-log-v17';
 const ASSETS = [
   './',
   './index.html',
@@ -32,11 +32,25 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // Skip caching for Supabase API calls
+  // Always go network-first for Supabase API calls
   if (e.request.url.includes('supabase.co')) {
     e.respondWith(fetch(e.request));
     return;
   }
+  // Network-first for navigation (HTML) so updates land immediately on next open
+  const isHtmlNav = e.request.mode === 'navigate' ||
+    (e.request.method === 'GET' && (e.request.headers.get('accept') || '').includes('text/html'));
+  if (isHtmlNav) {
+    e.respondWith(
+      fetch(e.request).then(res => {
+        const copy = res.clone();
+        caches.open(CACHE_NAME).then(c => c.put(e.request, copy)).catch(() => {});
+        return res;
+      }).catch(() => caches.match(e.request).then(c => c || caches.match('./index.html')))
+    );
+    return;
+  }
+  // Cache-first for static assets
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
