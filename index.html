@@ -199,10 +199,10 @@ function cloudErrorMessage(error){
   const raw = String(error?.message || error || "");
   const code = String(error?.code || "");
   if (/Invalid login credentials/i.test(raw)) return "メールアドレスまたはパスワードが違います";
-  if (/Email not confirmed/i.test(raw)) return "確認メールの認証が必要です";
-  if (/Failed to fetch|NetworkError|Load failed|fetch/i.test(raw)) return "Supabaseに接続できません。プロジェクトURLを確認してください";
-  if (/relation .*muscle_log_records|muscle_log_records|42P01|PGRST/i.test(raw + code)) return "Supabase側の記録テーブルがまだ作成されていません";
-  if (/row-level security|permission denied|42501/i.test(raw + code)) return "Supabase側の権限設定を確認してください";
+  if (/Email not confirmed/i.test(raw)) return "メール認証が未完了です。受信メールのリンクを開いてからログインしてください";
+  if (/Failed to fetch|NetworkError|Load failed/i.test(raw)) return "Supabaseに接続できません。プロジェクトURLを確認してください";
+  if (/42P01|relation .*does not exist/i.test(raw + code)) return "Supabase側の記録テーブルがまだ作成されていません";
+  if (/row-level security|permission denied|42501/i.test(raw + code)) return "ログイン状態を確認してください（メール認証が未完了の可能性）";
   return raw || "同期に失敗しました";
 }
 function setCloudStatus(status, message=""){
@@ -307,7 +307,25 @@ function renderAuthPanel(){
   const messageHtml = cloudMessage ? `<p>${escapeHtml(cloudMessage)}</p>` : "";
   if (cloudUser) {
     panel.innerHTML = `<div><span class="sync-state ${statusClass}">${statusLabel}</span></div><p>${escapeHtml(cloudUser.email || "ログイン中")}</p>${messageHtml}<div class="auth-row"><button class="outline-btn" id="syncNow" type="button">今すぐ同期</button><button class="outline-btn" id="cloudLogout" type="button">ログアウト</button></div>`;
-    document.getElementById("syncNow").onclick = () => pullCloudRecords().then(() => pushAllRecordsToCloud()).then(() => toast("同期しました")).catch(e => { const message = cloudErrorMessage(e); setCloudStatus("error", message); toast(message); });
+    document.getElementById("syncNow").onclick = async () => {
+      const client = getCloudClient();
+      const { data:{ session } } = await client.auth.getSession();
+      if (!session?.user) {
+        cloudUser = null;
+        setCloudStatus("local", "ログインセッションが切れています。もう一度ログインしてください");
+        return;
+      }
+      cloudUser = session.user;
+      try {
+        await pullCloudRecords();
+        await pushAllRecordsToCloud();
+        toast("同期しました");
+      } catch (e) {
+        const message = cloudErrorMessage(e);
+        setCloudStatus("error", message);
+        toast(message);
+      }
+    };
     document.getElementById("cloudLogout").onclick = async () => { const client = getCloudClient(); if (client) await client.auth.signOut(); cloudUser = null; setCloudStatus("local"); };
     return;
   }
@@ -339,21 +357,28 @@ async function cloudAuth(mode){
     return;
   }
   if (result.error) { const message = cloudErrorMessage(result.error); setCloudStatus("error", message); toast(message); return; }
-  cloudUser = result.data.user || result.data.session?.user || null;
-  if (cloudUser) {
-    try {
-      await pushAllRecordsToCloud();
-      await pullCloudRecords();
-      setCloudStatus("online");
-      toast(mode === "signup" ? "登録しました" : "ログインしました");
-    } catch (e) {
-      const message = cloudErrorMessage(e);
-      setCloudStatus("error", message);
-      toast(message);
-    }
-  } else {
-    setCloudStatus("local");
-    toast("確認メールが必要な可能性があります");
+  // Only treat the user as logged in when a session is actually present.
+  // signUp with email confirmation enabled returns data.user but no session.
+  const session = result.data.session;
+  cloudUser = session?.user || null;
+  if (!cloudUser) {
+    const message = mode === "signup"
+      ? "確認メールを送りました。受信メールのリンクを開いてからログインしてください"
+      : "ログインに失敗しました";
+    setCloudStatus("local", message);
+    toast(message);
+    refreshActiveScreen();
+    return;
+  }
+  try {
+    await pushAllRecordsToCloud();
+    await pullCloudRecords();
+    setCloudStatus("online");
+    toast(mode === "signup" ? "登録しました" : "ログインしました");
+  } catch (e) {
+    const message = cloudErrorMessage(e);
+    setCloudStatus("error", message);
+    toast(message);
   }
   refreshActiveScreen();
 }
