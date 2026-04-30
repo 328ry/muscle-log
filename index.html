@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#f7f9fc">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -19,11 +20,12 @@
   --blue:#1f7aec;--blue-dark:#0f63d8;--blue-soft:#eaf3ff;--green:#22c7a5;--green-soft:#e9fbf6;--orange:#f59e0b;
   --shadow:0 10px 28px rgba(15,35,70,.08),0 1px 2px rgba(15,35,70,.04);
   --shadow-strong:0 16px 38px rgba(15,35,70,.14);
+  --safe-t:env(safe-area-inset-top,0px);
   --safe-b:env(safe-area-inset-bottom,0px);
   --font:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;
 }
-html{font-family:var(--font);background:linear-gradient(180deg,#fff 0%,#edf4fb 100%);color:var(--ink);-webkit-tap-highlight-color:transparent}
-body{max-width:390px;margin:0 auto;min-height:100dvh;background:var(--bg);padding:0 16px calc(86px + var(--safe-b));box-shadow:0 18px 54px rgba(18,34,59,.14);overflow-x:hidden}
+html{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent}
+body{max-width:390px;margin:0 auto;min-height:100dvh;background:var(--bg);padding:var(--safe-t) 16px calc(86px + var(--safe-b));box-shadow:0 18px 54px rgba(18,34,59,.14);overflow-x:hidden}
 button,input,textarea{font:inherit}
 button{border:0;background:none;cursor:pointer;color:inherit}
 input,textarea{border:0;background:none;color:inherit}
@@ -58,7 +60,7 @@ input,textarea{border:0;background:none;color:inherit}
 .calendar-card{padding:14px}.month-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}.month-row strong{font-size:15px}.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;gap:7px;justify-items:center}.dow{font-size:11px;font-weight:800;color:var(--muted)}.day{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:800;position:relative;user-select:none}.day[data-date]{cursor:pointer}.day[data-date]:active{background:var(--blue-soft)}.day.active{background:var(--blue);color:#fff}.day.active[data-date]:active{background:var(--blue-dark)}.day.has::after{content:"";position:absolute;bottom:1px;width:4px;height:4px;background:var(--blue);border-radius:50%}.day.active::after{background:#fff}
 .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);padding:12px 0}.stats-strip div{text-align:center;border-right:1px solid #e5eaf1}.stats-strip div:last-child{border-right:0}.stats-strip strong{display:block;font-size:18px}.stats-strip span{font-size:11px;color:var(--muted);font-weight:800}
 .record-list{display:flex;flex-direction:column;gap:10px}.record-card{padding:14px}.record-head{display:flex;justify-content:space-between;align-items:center}.record-head strong{font-size:14px}.record-head span{font-size:12px;color:var(--muted);font-weight:800}.record-detail{font-size:12px;color:var(--muted);font-weight:800;margin:7px 0 12px}.record-table{display:flex;flex-direction:column;gap:8px}.record-row{display:grid;grid-template-columns:1fr auto;gap:10px;font-size:12px;font-weight:800}.record-row span:last-child{color:#111827}
-.range-tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.range-tabs button{height:32px;border-radius:9px;font-size:12px;font-weight:800}.range-tabs button.active{background:var(--blue);color:#fff}.chart-card{padding:16px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}.chart-title{font-size:15px;font-weight:900}.chart-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:3px}.best-badge{border:1px solid #8ec0ff;border-radius:8px;padding:6px 10px;text-align:center;color:var(--blue);font-weight:900;font-size:13px}.best-badge span{display:block;font-size:11px}.chart-wrap{height:210px}.chart-wrap canvas{width:100%!important;height:100%!important}.summary-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-card{padding:14px}.mini-card span{font-size:12px;color:var(--muted);font-weight:800}.mini-card strong{display:block;margin-top:8px;font-size:25px;color:#16a34a}.mini-card strong.orange{color:var(--orange)}
+.analytics-menu-card{padding:14px}.analytics-menu-card .chips{max-height:none}.chart-card{padding:16px}.chart-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}.chart-title{font-size:15px;font-weight:900}.chart-sub{font-size:12px;color:var(--muted);font-weight:800;margin-top:3px}.best-badge{border:1px solid #8ec0ff;border-radius:8px;padding:6px 10px;text-align:center;color:var(--blue);font-weight:900;font-size:13px}.best-badge span{display:block;font-size:11px}.chart-wrap{height:210px}.chart-wrap canvas{width:100%!important;height:100%!important}.summary-mini{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini-card{padding:14px}.mini-card span{font-size:12px;color:var(--muted);font-weight:800}.mini-card strong{display:block;margin-top:8px;font-size:25px;color:#16a34a}.mini-card strong.orange{color:var(--orange)}
 .settings-card{padding:16px}.settings-card strong{display:block;font-size:15px;margin-bottom:8px}.settings-card p{font-size:13px;line-height:1.7;color:var(--muted);font-weight:700}
 .auth-panel{display:flex;flex-direction:column;gap:10px}.auth-row{display:flex;gap:8px}.auth-row .primary-btn,.auth-row .outline-btn{flex:1}.sync-state{display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:var(--blue-soft);color:var(--blue);padding:6px 10px;font-size:12px;font-weight:900}.sync-state.local{background:#eef2f7;color:#64748b}.sync-state.error{background:#fef2f2;color:#ef4444}
 .tabbar{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.95);border-top:1px solid rgba(17,24,39,.06);box-shadow:0 -12px 32px rgba(15,35,70,.09);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:6px 0 calc(6px + var(--safe-b));z-index:50}.tabbar__inner{max-width:390px;height:64px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding:0 8px}.nav-btn{width:100%;height:54px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding-top:10px;font-size:10px;font-weight:800;color:#111827}.nav-btn.active{color:var(--blue)}.nav-btn svg{display:block;flex:0 0 auto}.nav-btn--add{position:relative;top:-16px;color:var(--blue);height:78px;padding-top:0;justify-content:flex-start;gap:3px}.nav-btn--add .plus{width:52px;height:52px;min-width:52px;min-height:52px;aspect-ratio:1/1;flex:0 0 52px;border-radius:999px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#2c8cff,#0f6fe8);box-shadow:0 10px 24px rgba(31,122,236,.35),0 0 0 7px rgba(255,255,255,.96);color:#fff;font-size:33px;font-weight:400;line-height:1;text-align:center;padding:0 0 3px}.nav-btn--add span:last-child{display:block;margin-top:0}
@@ -73,6 +75,8 @@ input,textarea{border:0;background:none;color:inherit}
 .danger-btn{height:42px;border:1.5px solid #fca5a5;color:#ef4444;background:#fff;border-radius:9px;font-size:14px;font-weight:900}
 .date-field{margin-top:-2px}.date-field .muted-label{font-size:12px;color:var(--muted);font-weight:800}.date-field .input{height:36px;font-size:13px;color:#374151}.date-hint{font-size:11px;color:var(--muted);font-weight:700;margin-top:-2px}.date-hint.past{color:var(--blue);font-weight:900}
 .exercise-info{display:none;margin-top:6px;padding:10px 12px;border-radius:10px;background:var(--blue-soft);font-size:12px;font-weight:700;color:#1e3a8a;line-height:1.5}.exercise-info.show{display:flex;flex-direction:column;gap:6px}.exercise-info .target{display:flex;gap:6px;align-items:center}.exercise-info .help-link{align-self:flex-start;color:var(--blue);font-weight:900;font-size:12px;text-decoration:underline;background:none;border:0;padding:0;cursor:pointer}
+.menu-hint{font-size:11px;color:var(--muted);font-weight:700;margin-top:6px}
+.menu-manage{display:flex;flex-direction:column;gap:8px;margin-top:6px}.menu-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#fff}.menu-row__main{min-width:0}.menu-row__name{font-size:13px;font-weight:900;color:#111827;line-height:1.3}.menu-row__sub{font-size:11px;color:var(--muted);font-weight:700;margin-top:2px}.menu-row__badge{align-self:start;background:#eef2f7;color:#64748b;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:900}.menu-row__delete{background:none;border:0;color:#ef4444;font-size:12px;font-weight:900;padding:6px 8px;cursor:pointer}
 .sheet--scroll{max-height:80vh;overflow-y:auto}.help-body{font-size:13px;line-height:1.7;color:#1f2937}.help-body h3{font-size:13px;font-weight:900;color:var(--blue);margin:14px 0 4px}.help-body h3:first-child{margin-top:0}.help-body p{margin:0 0 8px}.help-body ul{margin:0 0 8px;padding-left:18px}.help-body li{margin-bottom:3px}.help-body strong{color:#0f172a;font-weight:900}
 </style>
 </head>
@@ -99,8 +103,7 @@ input,textarea{border:0;background:none;color:inherit}
 
   <section class="screen" id="addScreen">
     <div class="form">
-      <div class="field"><label class="label" for="exerciseName">種目名</label><input class="input" id="exerciseName" list="exerciseOptions" placeholder="種目名を入力・選択"><datalist id="exerciseOptions"></datalist></div>
-      <div class="field"><div class="label">メニュー</div><div class="chips" id="recentChips"></div><div class="exercise-info" id="exerciseInfo"></div></div>
+      <div class="field"><div class="label">メニューを選択</div><div class="chips" id="recentChips"></div><div class="exercise-info" id="exerciseInfo"></div><div class="menu-hint">設定画面の「メニュー管理」から自分のメニューを追加できます。</div></div>
       <div class="field"><div class="label">重量 (kg)</div><div class="number-control"><button class="round-btn" data-step-weight="-1" type="button">−</button><div class="big-number" id="weightValue">12.0</div><button class="round-btn" data-step-weight="1" type="button">＋</button></div><div class="scale" id="weightScale"></div></div>
       <div class="field"><div class="label">回数 (回)</div><div class="number-control"><button class="round-btn" data-step-reps="-1" type="button">−</button><div class="big-number" id="repsValue">10</div><button class="round-btn" data-step-reps="1" type="button">＋</button></div><div class="scale" id="repsScale"></div></div>
       <div class="field"><div class="label">セット数</div><div class="set-grid" id="setGrid"></div></div>
@@ -117,13 +120,14 @@ input,textarea{border:0;background:none;color:inherit}
   </section>
 
   <section class="screen" id="analyticsScreen">
-    <div class="range-tabs"><button class="active" type="button">1週</button><button type="button">1か月</button><button type="button">3か月</button><button type="button">1年</button><button type="button">全期間</button></div>
-    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title" id="weightChartTitle">ダンベルカール</div><div class="chart-sub">最大重量の推移 (kg)</div></div><div class="best-badge"><span>自己ベスト</span><strong id="bestWeight">0kg</strong></div></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div></div>
-    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title">カール成長スコア</div><div class="chart-sub">ダンベルカール重量 × 合計回数</div></div><div class="best-badge"><span>最高スコア</span><strong id="bestCurlScore">0pt</strong></div></div><div class="chart-wrap"><canvas id="curlScoreChart"></canvas></div></div>
+    <div class="card analytics-menu-card"><div class="label" style="margin-bottom:8px">メニューを選択</div><div class="chips" id="analyticsMenuChips"></div></div>
+    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title" id="weightChartTitle">—</div><div class="chart-sub">最大重量の推移 (kg)</div></div><div class="best-badge"><span>自己ベスト</span><strong id="bestWeight">0kg</strong></div></div><div class="chart-wrap"><canvas id="weightChart"></canvas></div></div>
+    <div class="card chart-card"><div class="chart-head"><div><div class="chart-title" id="volumeChartTitle">—</div><div class="chart-sub">総ボリューム（重量 × 回数 × セット）</div></div><div class="best-badge"><span>最高ボリューム</span><strong id="bestVolume">0</strong></div></div><div class="chart-wrap"><canvas id="volumeChart"></canvas></div></div>
     <div class="summary-mini"><div class="card mini-card"><span>先月比（最大重量）</span><strong id="monthGrowth">+0%</strong></div><div class="card mini-card"><span>自己ベスト更新</span><strong class="orange" id="prCount">0回</strong></div></div>
   </section>
 
   <section class="screen" id="settingsScreen">
+    <div class="card settings-card"><strong>メニュー管理</strong><div class="menu-manage" id="menuManage"></div><button class="primary-btn" id="addMenuOpen" type="button" style="margin-top:12px">＋ 新しいメニューを追加</button></div>
     <div class="card settings-card"><strong>同期</strong><div class="auth-panel" id="authPanel"></div></div>
   </section>
 </main>
@@ -137,6 +141,20 @@ input,textarea{border:0;background:none;color:inherit}
 </div></nav>
 <div class="toast" id="toast"></div>
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet sheet--scroll" id="addMenuSheet" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="sheet__head"><div class="sheet__title">新しいメニュー</div><button class="sheet__close" id="addMenuClose" type="button" aria-label="閉じる">×</button></div>
+  <div class="sheet__field"><label for="newMenuName">種目名</label><input class="input" id="newMenuName" type="text" autocomplete="off" placeholder="例: ダンベルプルオーバー"></div>
+  <div class="sheet__field"><label for="newMenuTarget">鍛える部位</label><input class="input" id="newMenuTarget" type="text" autocomplete="off" placeholder="例: 胸・背中"></div>
+  <div class="sheet__row">
+    <div class="sheet__field"><label for="newMenuWeight">標準の重量 (kg)</label><input class="input" id="newMenuWeight" type="text" inputmode="decimal" pattern="[0-9.]*" autocomplete="off" placeholder="6.5"></div>
+    <div class="sheet__field"><label for="newMenuReps">標準の回数</label><input class="input" id="newMenuReps" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="10"></div>
+  </div>
+  <div class="sheet__row">
+    <div class="sheet__field"><label for="newMenuSets">標準のセット数</label><input class="input" id="newMenuSets" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off" placeholder="3"></div>
+    <div></div>
+  </div>
+  <div class="sheet__actions" style="grid-template-columns:1fr"><button class="primary-btn" id="addMenuSave" type="button">保存</button></div>
+</div>
 <div class="sheet sheet--scroll" id="helpSheet" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="sheet__head"><div class="sheet__title" id="helpSheetTitle">種目の解説</div><button class="sheet__close" id="helpSheetClose" type="button" aria-label="閉じる">×</button></div>
   <div class="help-body" id="helpSheetBody"></div>
@@ -233,12 +251,16 @@ const EXERCISE_LIBRARY = [
 <h3>目安</h3><p>3セット × 15〜20回。</p>` },
 ];
 const EXERCISES = EXERCISE_LIBRARY.map(e => e.name);
-function findExerciseInfo(name){ return EXERCISE_LIBRARY.find(e => e.name === name); }
+const USER_MENU_KEY = "muscle_log_menu_v1";
+function loadUserMenu(){ try { return JSON.parse(localStorage.getItem(USER_MENU_KEY)) || []; } catch { return []; } }
+function saveUserMenu(menu){ localStorage.setItem(USER_MENU_KEY, JSON.stringify(menu)); }
+function getAllMenu(){ return [...EXERCISE_LIBRARY, ...loadUserMenu()]; }
+function findExerciseInfo(name){ return getAllMenu().find(e => e.name === name); }
 // Dumbbell ladder (per-hand kg) — see memory user_fitness_profile.md
 const WEIGHTS = [2.5,3.5,4.5,5.5,6.5,8,9,10,11.5,13.5,16,18,20.5,22.5,24];
 const REPS = [6,8,10,12,15,20,25];
 const DOW = ["日","月","火","水","木","金","土"];
-let state = { weight: 12, reps: 10, sets: 3, month: new Date(), activeDate: null, charts: {} };
+let state = { weight: 12, reps: 10, sets: 3, month: new Date(), activeDate: null, selectedMenu: null, analyticsMenu: null, charts: {} };
 let cloudClient = null;
 let cloudUser = null;
 let cloudStatus = "local";
@@ -393,7 +415,68 @@ function refreshActiveScreen(){
   if (active === "homeScreen") renderHome();
   if (active === "recordsScreen") renderRecords();
   if (active === "analyticsScreen") renderAnalytics();
-  if (active === "settingsScreen") renderAuthPanel();
+  if (active === "settingsScreen") renderSettings();
+}
+function renderSettings(){
+  renderMenuManage();
+  renderAuthPanel();
+}
+function renderMenuManage(){
+  const box = document.getElementById("menuManage");
+  if (!box) return;
+  const userMenu = loadUserMenu();
+  const rows = [
+    ...EXERCISE_LIBRARY.map(e => ({ ...e, isUser:false })),
+    ...userMenu.map(e => ({ ...e, isUser:true })),
+  ];
+  box.innerHTML = rows.map(e => `
+    <div class="menu-row">
+      <div class="menu-row__main">
+        <div class="menu-row__name">${escapeHtml(e.name)}</div>
+        <div class="menu-row__sub">${escapeHtml(e.target || "")} ${e.defaultWeight !== undefined ? `· 標準 ${e.defaultWeight}kg × ${e.defaultReps}回 × ${e.defaultSets}セット` : ""}</div>
+      </div>
+      ${e.isUser
+        ? `<button class="menu-row__delete" type="button" data-del-id="${escapeHtml(e.id)}">削除</button>`
+        : `<span class="menu-row__badge">標準</span>`}
+    </div>`).join("");
+  box.querySelectorAll("[data-del-id]").forEach(btn => btn.onclick = () => deleteUserMenu(btn.dataset.delId));
+}
+function deleteUserMenu(id){
+  if (!confirm("このメニューを削除しますか？\n（過去の記録は残ります）")) return;
+  const next = loadUserMenu().filter(e => e.id !== id);
+  saveUserMenu(next);
+  renderMenuManage();
+  toast("削除しました");
+}
+function openAddMenu(){
+  document.getElementById("newMenuName").value = "";
+  document.getElementById("newMenuTarget").value = "";
+  document.getElementById("newMenuWeight").value = "";
+  document.getElementById("newMenuReps").value = "";
+  document.getElementById("newMenuSets").value = "";
+  document.getElementById("addMenuSheet").classList.add("open");
+  document.getElementById("sheetBackdrop").classList.add("open");
+  document.getElementById("addMenuSheet").setAttribute("aria-hidden","false");
+}
+function closeAddMenu(){
+  document.getElementById("addMenuSheet").classList.remove("open");
+  document.getElementById("sheetBackdrop").classList.remove("open");
+  document.getElementById("addMenuSheet").setAttribute("aria-hidden","true");
+}
+function saveNewMenu(){
+  const name = document.getElementById("newMenuName").value.trim();
+  if (!name) { toast("種目名を入力してください"); return; }
+  if (getAllMenu().some(e => e.name === name)) { toast("同じ名前のメニューが既にあります"); return; }
+  const target = document.getElementById("newMenuTarget").value.trim();
+  const weight = Math.max(0, Number(document.getElementById("newMenuWeight").value) || 0);
+  const reps = Math.max(1, Math.round(Number(document.getElementById("newMenuReps").value) || 10));
+  const sets = Math.max(1, Math.round(Number(document.getElementById("newMenuSets").value) || 3));
+  const menu = loadUserMenu();
+  menu.push({ id: `user_${Date.now()}_${Math.random().toString(36).slice(2,7)}`, name, target, defaultWeight:weight, defaultReps:reps, defaultSets:sets, help:"" });
+  saveUserMenu(menu);
+  closeAddMenu();
+  toast("メニューを追加しました");
+  renderMenuManage();
 }
 function renderAuthPanel(){
   const panel = document.getElementById("authPanel");
@@ -496,7 +579,7 @@ function switchScreen(name){
   if (name === "add") renderAdd();
   if (name === "records") renderRecords();
   if (name === "analytics") renderAnalytics();
-  if (name === "settings") renderAuthPanel();
+  if (name === "settings") renderSettings();
 }
 const SET_GOAL = 10;
 function renderHome(){
@@ -524,21 +607,21 @@ function workoutCard(e,i,done=false,date){
   return `<div class="card workout-card"${editAttr}><div class="check ${done ? "done" : ""}"></div><div class="exercise-art">${art}</div><div><div class="workout-card__name">${escapeHtml(e.name)}</div><div class="metric-row"><div class="mini-metric"><strong>${e.weight}kg</strong><span>重量</span></div><div class="mini-metric"><strong>${e.reps}回</strong><span>回数</span></div><div class="mini-metric"><strong>${e.sets}セット</strong><span>セット</span></div></div></div><div class="chev">›</div></div>`;
 }
 function renderAdd(){
-  document.getElementById("exerciseOptions").innerHTML = EXERCISE_LIBRARY.map(e => `<option value="${e.name}">${e.target}</option>`).join("");
-  document.getElementById("recentChips").innerHTML = EXERCISE_LIBRARY.map(e => `<button class="chip" type="button" data-name="${escapeHtml(e.name)}">${escapeHtml(e.name)}</button>`).join("");
+  const menu = getAllMenu();
+  document.getElementById("recentChips").innerHTML = menu.map(e => `<button class="chip" type="button" data-name="${escapeHtml(e.name)}">${escapeHtml(e.name)}</button>`).join("");
   document.querySelectorAll("#recentChips [data-name]").forEach(b => b.onclick = () => selectExercise(b.dataset.name));
-  document.getElementById("exerciseName").oninput = (ev) => {
-    const name = ev.target.value.trim();
-    document.querySelectorAll("#recentChips [data-name]").forEach(c => c.classList.toggle("active", c.dataset.name === name));
-    refreshExerciseInfo(name);
-  };
-  refreshExerciseInfo(document.getElementById("exerciseName").value.trim());
+  if (state.selectedMenu && menu.some(e => e.name === state.selectedMenu)) {
+    selectExercise(state.selectedMenu);
+  } else {
+    state.selectedMenu = null;
+    refreshExerciseInfo("");
+  }
   renderNumberControls();
   renderAddDate();
 }
 function selectExercise(name){
   const info = findExerciseInfo(name);
-  document.getElementById("exerciseName").value = name;
+  state.selectedMenu = name;
   document.querySelectorAll("#recentChips [data-name]").forEach(c => c.classList.toggle("active", c.dataset.name === name));
   if (info) {
     state.weight = info.defaultWeight;
@@ -602,8 +685,8 @@ function renderNumberControls(){
   document.querySelectorAll("[data-sets]").forEach(el => el.onclick = () => { state.sets = Number(el.dataset.sets); renderNumberControls(); });
 }
 function saveExercise({stay=false}={}){
-  const input = document.getElementById("exerciseName");
-  const name = input.value.trim() || "ダンベルカール";
+  const name = state.selectedMenu;
+  if (!name) { toast("メニューを選んでください"); return; }
   const records = loadRecords();
   const date = activeKey();
   let record = records.find(r => r.date === date);
@@ -612,9 +695,9 @@ function saveExercise({stay=false}={}){
   record.memo = document.getElementById("memoInput").value.trim();
   touchRecord(record);
   saveRecords(records);
-  input.value = ""; document.getElementById("memoInput").value = "";
+  document.getElementById("memoInput").value = "";
   toast(date === todayKey() ? "保存しました" : `${dateLabel(date)}に保存しました`);
-  if (!stay) { state.activeDate = null; switchScreen("home"); }
+  if (!stay) { state.activeDate = null; state.selectedMenu = null; switchScreen("home"); }
 }
 function renderRecords(){
   renderCalendar();
@@ -656,24 +739,48 @@ function renderCalendar(){
 }
 function renderAnalytics(){
   const records = loadRecords().sort((a,b)=>a.date.localeCompare(b.date));
+  // Build menu list from recorded exercise names + library, prioritize names that have actual records
+  const recordedNames = [...new Set(records.flatMap(r => r.exercises.map(e => e.name)))];
+  const menuNames = [...new Set([...recordedNames, ...getAllMenu().map(e => e.name)])];
+  if (!state.analyticsMenu || !menuNames.includes(state.analyticsMenu)) {
+    state.analyticsMenu = recordedNames[recordedNames.length - 1] || menuNames[0] || null;
+  }
+  const chipsBox = document.getElementById("analyticsMenuChips");
+  chipsBox.innerHTML = menuNames.map(n => {
+    const has = recordedNames.includes(n);
+    return `<button class="chip ${state.analyticsMenu === n ? "active" : ""}" type="button" data-analytics-name="${escapeHtml(n)}"${has ? "" : ' style="opacity:.5"'}>${escapeHtml(n)}</button>`;
+  }).join("");
+  chipsBox.querySelectorAll("[data-analytics-name]").forEach(b => b.onclick = () => { state.analyticsMenu = b.dataset.analyticsName; renderAnalytics(); });
+
+  const target = state.analyticsMenu;
   const points = records.map(r => {
-    const flat = r.exercises;
-    const maxWeight = flat.length ? Math.max(...flat.map(e => e.weight)) : 0;
-    const curl = curlMetrics(r);
-    return { label:dateLabel(r.date).split("(")[0], maxWeight, curlScore: curl.score, curlReps: curl.reps };
-  }).slice(-7);
+    const exs = r.exercises.filter(e => e.name === target);
+    if (!exs.length) return null;
+    const maxW = Math.max(...exs.map(e => e.weight));
+    const volume = exs.reduce((s,e) => s + e.weight * e.reps * e.sets, 0);
+    return { label:dateLabel(r.date).split("(")[0], maxW, volume };
+  }).filter(Boolean).slice(-12);
   const labels = points.map(p => p.label);
-  const weights = points.map(p => p.maxWeight);
-  const curlScores = points.map(p => p.curlScore);
+  const weights = points.map(p => p.maxW);
+  const volumes = points.map(p => p.volume);
   const bestW = weights.length ? Math.max(...weights) : 0;
-  const bestScore = curlScores.length ? Math.max(...curlScores) : 0;
+  const bestVol = volumes.length ? Math.max(...volumes) : 0;
+  document.getElementById("weightChartTitle").textContent = target || "メニュー未選択";
+  document.getElementById("volumeChartTitle").textContent = target || "メニュー未選択";
   document.getElementById("bestWeight").textContent = `${bestW}kg`;
-  document.getElementById("bestCurlScore").textContent = `${Math.round(bestScore)}pt`;
-  document.getElementById("weightChartTitle").textContent = mostRecentExercise() || "ダンベルカール";
-  document.getElementById("monthGrowth").textContent = weights.length >= 2 && weights[0] ? `+${Math.round((weights.at(-1)-weights[0])/weights[0]*100)}%` : "+0%";
-  document.getElementById("prCount").textContent = `${countPr(records)}回`;
+  document.getElementById("bestVolume").textContent = `${Math.round(bestVol)}`;
+  document.getElementById("monthGrowth").textContent = weights.length >= 2 && weights[0] ? `${weights.at(-1) >= weights[0] ? "+" : ""}${Math.round((weights.at(-1)-weights[0])/weights[0]*100)}%` : "+0%";
+  document.getElementById("prCount").textContent = `${countPrFor(records, target)}回`;
   drawChart("weightChart","line",labels,weights,varColor("--blue"),"rgba(31,122,236,.08)");
-  drawChart("curlScoreChart","bar",labels,curlScores,varColor("--green"),"rgba(34,199,165,.75)");
+  drawChart("volumeChart","bar",labels,volumes,varColor("--green"),"rgba(34,199,165,.75)");
+}
+function countPrFor(records, name){
+  let best=0,count=0;
+  records.forEach(r => r.exercises.forEach(e => {
+    if (e.name !== name) return;
+    if (e.weight > best) { if (best > 0) count++; best = e.weight; }
+  }));
+  return count;
 }
 function drawChart(id,type,labels,data,border,background){
   if (state.charts[id]) state.charts[id].destroy();
@@ -762,7 +869,10 @@ document.getElementById("nextMonth").onclick = () => { state.month.setMonth(stat
 document.getElementById("topAction").onclick = () => switchScreen("settings");
 document.getElementById("sheetClose").onclick = closeExerciseEditor;
 document.getElementById("helpSheetClose").onclick = closeExerciseHelp;
-document.getElementById("sheetBackdrop").onclick = () => { closeExerciseEditor(); closeExerciseHelp(); };
+document.getElementById("addMenuClose").onclick = closeAddMenu;
+document.getElementById("addMenuOpen").onclick = openAddMenu;
+document.getElementById("addMenuSave").onclick = saveNewMenu;
+document.getElementById("sheetBackdrop").onclick = () => { closeExerciseEditor(); closeExerciseHelp(); closeAddMenu(); };
 document.getElementById("editSave").onclick = applyExerciseEdit;
 document.getElementById("editDelete").onclick = deleteExerciseFromRecord;
 

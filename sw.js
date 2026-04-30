@@ -1,4 +1,4 @@
-const CACHE_NAME = 'muscle-log-v17';
+const CACHE_NAME = 'muscle-log-v18';
 const ASSETS = [
   './',
   './index.html',
